@@ -1,0 +1,700 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Ethan P. — AI for Business</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Space+Grotesk:wght@400;500;600;700;800;900&family=Caveat:wght@500;700&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+  :root {
+    --bg: #F4F0EB;
+    --text: #111;
+    --text-secondary: #555;
+    --text-muted: #888;
+    --blue: #2563EB;
+    --blue-light: rgba(37,99,235,0.08);
+    --coral: #E8553D;
+    --emerald: #0F7B5F;
+    --amber: #D97706;
+    --border: rgba(0,0,0,0.1);
+    --font-display: 'Space Grotesk', sans-serif;
+    --font-body: 'Inter', sans-serif;
+    --font-hand: 'Caveat', cursive;
+  }
+
+  html { scroll-behavior: smooth; }
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: var(--font-body);
+    font-size: 1rem;
+    line-height: 1.65;
+    overflow-x: hidden;
+  }
+
+  /* ---- NAV ---- */
+  nav {
+    position: fixed; top: 0; left: 0; right: 0; z-index: 200;
+    padding: 1.5rem 2.5rem;
+    display: flex; justify-content: space-between; align-items: center;
+    background: rgba(244,240,235,0.9); backdrop-filter: blur(12px);
+    border-bottom: 1px solid var(--border);
+  }
+  nav .logo {
+    font-family: var(--font-display); font-weight: 800; font-size: 1rem;
+    color: var(--blue); text-decoration: none; letter-spacing: -0.02em;
+  }
+  nav .nav-links { display: flex; gap: 2rem; }
+  nav .nav-links a {
+    font-family: var(--font-display); font-size: 0.8rem; font-weight: 600;
+    color: var(--text); text-decoration: none; text-transform: uppercase; letter-spacing: 0.05em;
+    transition: color 0.2s;
+  }
+  nav .nav-links a:hover { color: var(--blue); }
+
+  /* ---- HERO ---- */
+  .hero {
+    min-height: 100vh; position: relative;
+    padding: 0 0 0 2.5rem; display: flex; align-items: flex-end;
+  }
+  .hero-text { padding-bottom: 6rem; position: relative; z-index: 1; }
+  .hero-image {
+    position: absolute; top: 0; right: -10%; bottom: 0; width: 80%;
+    display: flex; align-items: flex-end; justify-content: flex-end; z-index: 0;
+  }
+  .hero-image img { width: 100%; height: 100%; object-fit: contain; object-position: right bottom; }
+  .hero h1 {
+    font-family: var(--font-display);
+    font-size: clamp(3rem, 8vw, 6rem);
+    font-weight: 900; line-height: 0.95; letter-spacing: -0.04em;
+    color: var(--text); max-width: 700px;
+  }
+  .hero h1 .line { display: block; }
+  .hero h1 .thin { font-weight: 400; font-style: italic; }
+  .hero-sub {
+    margin-top: 2rem; font-size: 1rem; color: var(--text-secondary);
+    max-width: 420px; line-height: 1.7;
+  }
+  .hero-cta {
+    margin-top: 2rem; display: flex; gap: 1rem;
+  }
+  .btn {
+    display: inline-block; padding: 0.7rem 1.8rem; border-radius: 100px;
+    font-family: var(--font-display); font-weight: 600; font-size: 0.85rem;
+    text-decoration: none; transition: transform 0.2s, box-shadow 0.2s;
+    letter-spacing: 0.02em;
+  }
+  .btn:hover { transform: translateY(-2px); }
+  .btn-dark { background: var(--text); color: var(--bg); }
+  .btn-dark:hover { box-shadow: 0 4px 16px rgba(0,0,0,0.2); }
+  .btn-outline { background: none; color: var(--text); border: 2px solid var(--border); }
+  .btn-outline:hover { border-color: var(--text); }
+
+  /* ---- SECTION BASICS ---- */
+  section { position: relative; z-index: 1; }
+  .container { max-width: 1100px; margin: 0 auto; }
+
+  /* ---- SECTION 2: WHAT I DO + CASE STUDIES (merged interactive) ---- */
+  .services {
+    padding: 6rem 2.5rem;
+    border-top: 1px solid var(--border);
+  }
+  .services-header {
+    display: flex; justify-content: space-between; align-items: flex-end;
+    margin-bottom: 3rem;
+  }
+  .services-header h2 {
+    font-family: var(--font-display);
+    font-size: clamp(1.8rem, 4vw, 2.8rem);
+    font-weight: 700; line-height: 1.1; letter-spacing: -0.02em;
+  }
+  .services-header p {
+    font-size: 0.85rem; color: var(--text-muted); max-width: 300px; text-align: right;
+  }
+
+  /* Tab nav */
+  .tab-nav {
+    display: flex; gap: 0; border: 1px solid var(--border);
+    border-radius: 8px; overflow: hidden; margin-bottom: 0;
+  }
+  .tab-btn {
+    flex: 1; padding: 1rem 1.25rem; background: var(--bg); border: none;
+    font-family: var(--font-display); font-size: 0.78rem; font-weight: 700;
+    text-transform: uppercase; letter-spacing: 0.06em; color: var(--text-muted);
+    cursor: pointer; transition: all 0.25s ease; position: relative;
+    border-right: 1px solid var(--border); text-align: center;
+  }
+  .tab-btn:last-child { border-right: none; }
+  .tab-btn:hover { background: rgba(0,0,0,0.03); color: var(--text); }
+  .tab-btn.active {
+    background: var(--text); color: var(--bg);
+  }
+  .tab-btn .tab-sub {
+    display: block; font-size: 0.65rem; font-weight: 500; margin-top: 0.25rem;
+    text-transform: none; letter-spacing: 0; opacity: 0.6;
+  }
+
+  /* Tab content */
+  .tab-panel { display: none; }
+  .tab-panel.active { display: block; }
+  .tab-content {
+    border: 1px solid var(--border); border-top: none;
+    border-radius: 0 0 8px 8px; overflow: hidden;
+  }
+  .tab-inner {
+    display: grid; grid-template-columns: 1fr 1fr;
+    min-height: 420px;
+  }
+
+  /* Left: problem + solution */
+  .tab-left {
+    padding: 2.5rem; display: flex; flex-direction: column; justify-content: center;
+  }
+  .tab-problem {
+    font-size: 0.95rem; color: var(--text-secondary); line-height: 1.7;
+    margin-bottom: 1.5rem; padding-bottom: 1.5rem; border-bottom: 1px solid var(--border);
+  }
+  .tab-solution { }
+  .tab-solution h4 {
+    font-family: var(--font-display); font-size: 0.95rem; font-weight: 700;
+    margin-bottom: 0.75rem;
+  }
+  .tab-solution ol {
+    padding-left: 1.25rem; font-size: 0.85rem; color: var(--text-secondary); line-height: 1.7;
+  }
+  .tab-solution li { margin-bottom: 0.3rem; }
+  .tab-insight {
+    border-left: 3px solid var(--coral); padding: 0.6rem 0.8rem;
+    margin-top: 1.25rem; background: rgba(232,85,61,0.06);
+    font-size: 0.82rem; line-height: 1.5; color: var(--text-secondary);
+  }
+  .tab-pills { margin-top: 1rem; }
+  .tab-pills span {
+    display: inline-block; font-size: 0.65rem; font-weight: 600;
+    text-transform: uppercase; letter-spacing: 0.04em;
+    padding: 0.2rem 0.55rem; border: 1px solid var(--border);
+    border-radius: 100px; margin: 0.15rem 0.1rem; color: var(--text-secondary);
+  }
+
+  /* Right: diagram */
+  .tab-right {
+    background: var(--text); display: flex; flex-direction: column;
+    align-items: center; justify-content: center; padding: 2.5rem;
+    position: relative;
+  }
+  .tab-right .diagram-title {
+    font-family: var(--font-display); font-size: 0.65rem; font-weight: 700;
+    text-transform: uppercase; letter-spacing: 0.12em; color: rgba(244,240,235,0.4);
+    margin-bottom: 2rem;
+  }
+  .tab-right .box {
+    background: rgba(244,240,235,0.08); border-color: rgba(244,240,235,0.2); color: var(--bg);
+  }
+  .tab-right .box.input { border-color: rgba(244,240,235,0.5); background: rgba(244,240,235,0.1); }
+  .tab-right .box.ai { border-color: var(--bg); background: var(--bg); color: var(--text); font-weight: 700; }
+  .tab-right .box.output { border-color: #34d399; background: rgba(52,211,153,0.12); color: #34d399; }
+  .tab-right .box.human { border-color: #fbbf24; background: rgba(251,191,36,0.12); color: #fbbf24; }
+  .tab-right .box.alert { border-color: #f87171; background: rgba(248,113,113,0.12); color: #f87171; }
+  .tab-right .arrow { background: rgba(244,240,235,0.3); }
+  .tab-right .arrow::after { border-left-color: rgba(244,240,235,0.3); }
+  .tab-right .arrow-down { background: rgba(244,240,235,0.3); }
+  .tab-right .arrow-down::after { border-top-color: rgba(244,240,235,0.3); }
+  .tab-right .result-stat {
+    margin-top: 2rem; text-align: center;
+  }
+  .tab-right .stat-num {
+    font-family: var(--font-display); font-size: 2.5rem; font-weight: 900; color: var(--emerald);
+  }
+  .tab-right .stat-label {
+    font-size: 0.75rem; color: rgba(244,240,235,0.5); margin-top: 0.25rem;
+  }
+
+  /* Diagram shared */
+  .diagram { display: flex; flex-direction: column; align-items: center; gap: 0; }
+  .diagram-row { display: flex; align-items: center; gap: 0.4rem; flex-wrap: wrap; justify-content: center; }
+  .box {
+    border: 2px solid var(--border); border-radius: 8px;
+    padding: 0.5rem 0.8rem; text-align: center;
+    font-weight: 600; font-size: 0.72rem; min-width: 80px;
+  }
+  .arrow { width: 24px; height: 2px; background: var(--text); position: relative; flex-shrink: 0; }
+  .arrow::after {
+    content: ''; position: absolute; right: -1px; top: 50%; transform: translateY(-50%);
+    border: 4px solid transparent; border-left: 5px solid var(--text);
+  }
+  .arrow-down { width: 2px; height: 16px; background: var(--text); position: relative; margin: 0 auto; }
+  .arrow-down::after {
+    content: ''; position: absolute; bottom: -1px; left: 50%; transform: translateX(-50%);
+    border: 4px solid transparent; border-top: 5px solid var(--text);
+  }
+  .diagram-branch { display: flex; gap: 0.5rem; justify-content: center; flex-wrap: wrap; margin: 0.15rem 0; }
+
+  /* ---- PROCESS (horizontal compact) ---- */
+  .process-bar {
+    border-top: 1px solid var(--border);
+    padding: 3rem 2.5rem;
+  }
+  .process-bar .container {
+    display: flex; align-items: flex-start; gap: 0;
+  }
+  .process-bar-label {
+    font-family: var(--font-display); font-size: 0.65rem; font-weight: 700;
+    text-transform: uppercase; letter-spacing: 0.15em; color: var(--text-muted);
+    writing-mode: vertical-rl; transform: rotate(180deg);
+    margin-right: 2rem; white-space: nowrap; padding-top: 0.5rem;
+  }
+  .process-steps {
+    display: grid; grid-template-columns: repeat(4, 1fr);
+    gap: 0; flex: 1; border: 1px solid var(--border);
+  }
+  .p-step {
+    padding: 1.5rem; position: relative;
+    border-right: 1px solid var(--border);
+  }
+  .p-step:last-child { border-right: none; }
+  .p-step-num {
+    font-family: var(--font-display); font-size: 2rem; font-weight: 900;
+    color: var(--text); opacity: 0.06; position: absolute; top: 0.75rem; right: 1rem;
+  }
+  .p-step h4 {
+    font-family: var(--font-display); font-size: 0.85rem; font-weight: 700; margin-bottom: 0.4rem;
+  }
+  .p-step p {
+    font-size: 0.78rem; color: var(--text-secondary); line-height: 1.5; margin: 0;
+  }
+
+  /* ---- ABOUT + ROBOT ---- */
+  .about {
+    padding: 6rem 2.5rem; border-top: 1px solid var(--border);
+  }
+  .about-inner {
+    max-width: 1100px; margin: 0 auto;
+    display: grid; grid-template-columns: 1fr 1fr;
+    gap: 4rem; align-items: center;
+  }
+  .about-heading {
+    font-family: var(--font-display);
+    font-size: clamp(1.6rem, 3vw, 2.2rem);
+    font-weight: 700; line-height: 1.15; letter-spacing: -0.02em;
+    margin-bottom: 1.5rem;
+  }
+  .about-text p {
+    font-size: 0.95rem; color: var(--text-secondary); line-height: 1.75; margin-bottom: 1.25rem;
+  }
+  .about-image img { width: 100%; display: block; }
+
+  /* ---- CONTACT + CTA (merged) ---- */
+  .contact-cta {
+    border-top: 1px solid var(--border); position: relative; overflow: hidden; z-index: 1;
+  }
+  .contact-top {
+    display: grid; grid-template-columns: repeat(4, 1fr); gap: 2rem;
+    padding: 3rem 2.5rem; max-width: 1100px; margin: 0 auto;
+    font-size: 0.8rem; color: var(--text-secondary);
+  }
+  .contact-top a { color: var(--text); text-decoration: none; font-weight: 500; }
+  .contact-top a:hover { text-decoration: underline; }
+  .col-label {
+    font-size: 0.65rem; text-transform: uppercase; letter-spacing: 0.08em;
+    color: var(--text-muted); margin-bottom: 0.3rem; font-weight: 600;
+  }
+  /* Fixed background avatar */
+  .bg-avatar {
+    position: fixed; bottom: 0; left: 50%; transform: translateX(-50%);
+    height: 90vh; width: auto; z-index: 0;
+    pointer-events: none; opacity: 0;
+    transition: opacity 0.1s linear;
+  }
+
+  .giant-cta {
+    position: relative; text-align: center; overflow: hidden;
+    padding: 0 2.5rem; border-top: 1px solid var(--border);
+  }
+  .giant-cta-inner {
+    position: relative; min-height: 500px;
+    display: flex; align-items: flex-end; justify-content: center;
+  }
+  .giant-cta-text {
+    font-family: var(--font-display);
+    font-size: clamp(5rem, 15vw, 14rem);
+    font-weight: 900; line-height: 0.9; letter-spacing: -0.05em;
+    color: var(--text); text-align: center; cursor: default;
+    position: relative; z-index: 2; padding-bottom: 1rem;
+  }
+  .giant-cta-text a { color: inherit; text-decoration: none; transition: color 0.3s; }
+  .giant-cta-text a:hover { color: var(--text-secondary); }
+
+  /* ---- ANIMATIONS ---- */
+  .reveal { opacity: 0; transform: translateY(30px); transition: opacity 0.7s ease, transform 0.7s ease; }
+  .reveal.visible { opacity: 1; transform: translateY(0); }
+  .d1 { transition-delay: 0.1s; }
+  .d2 { transition-delay: 0.2s; }
+  .d3 { transition-delay: 0.3s; }
+
+  /* ---- RESPONSIVE ---- */
+  @media (max-width: 768px) {
+    nav { padding: 1rem 1.5rem; }
+    nav .nav-links { gap: 1rem; }
+    nav .nav-links a { font-size: 0.7rem; }
+    .hero { padding: 0 1.5rem; }
+    .hero-image { width: 100%; right: 0; opacity: 0.2; }
+    .hero h1 { font-size: 2.5rem; }
+    .services { padding: 4rem 1.5rem; }
+    .services-header { flex-direction: column; gap: 0.5rem; align-items: flex-start; }
+    .services-header p { text-align: left; }
+    .tab-nav { flex-wrap: wrap; }
+    .tab-btn { flex: 1 1 45%; }
+    .tab-inner { grid-template-columns: 1fr; }
+    .tab-right { min-height: 300px; }
+    .process-bar { padding: 2rem 1.5rem; }
+    .process-bar .container { flex-direction: column; }
+    .process-bar-label { writing-mode: horizontal-tb; transform: none; margin: 0 0 1rem 0; }
+    .process-steps { grid-template-columns: 1fr 1fr; }
+    .p-step { border-bottom: 1px solid var(--border); }
+    .about { padding: 4rem 1.5rem; }
+    .about-inner { grid-template-columns: 1fr; gap: 2rem; }
+    .contact-top { grid-template-columns: 1fr 1fr; }
+    .giant-cta-text { font-size: 3rem; }
+  }
+</style>
+</head>
+<body>
+
+<img src="avatar-front.png" alt="" class="bg-avatar" id="bgAvatar">
+
+<!-- NAV -->
+<nav>
+  <a href="#" class="logo">Ethan P.</a>
+  <div class="nav-links">
+    <a href="#work">Work</a>
+    <a href="#process">Process</a>
+    <a href="#contact">Contact</a>
+  </div>
+</nav>
+
+<!-- ============================================ -->
+<!-- HERO -->
+<!-- ============================================ -->
+<section class="hero" id="hero">
+  <div class="hero-text">
+    <h1 class="reveal">
+      <span class="line">I build with</span>
+      <span class="line"><span class="thin">Claude Code.</span></span>
+      <span class="line">Your business</span>
+      <span class="line">runs better.</span>
+    </h1>
+    <p class="hero-sub reveal d1">I build AI systems that plug directly into how your business operates. Data pipelines, automated workflows, monitoring. Claude Code does the heavy lifting.</p>
+    <div class="hero-cta reveal d2">
+      <a href="#work" class="btn btn-dark">See my work</a>
+      <a href="#contact" class="btn btn-outline">Get in touch</a>
+    </div>
+  </div>
+  <div class="hero-image">
+    <img src="hero-avatar.png" alt="3D avatar working at desk">
+  </div>
+</section>
+
+<!-- ============================================ -->
+<!-- SECTION 2: WHAT I DO + CASE STUDIES (tabbed) -->
+<!-- ============================================ -->
+<section class="services" id="work">
+  <div class="container">
+    <div class="services-header reveal">
+      <h2>What I build</h2>
+      <p>Click a project to see the problem, solution, and system diagram.</p>
+    </div>
+
+    <div class="tab-nav reveal d1">
+      <button class="tab-btn active" onclick="switchTab(0)">
+        Email Triage
+        <span class="tab-sub">Workflow</span>
+      </button>
+      <button class="tab-btn" onclick="switchTab(1)">
+        Content Pipeline
+        <span class="tab-sub">Content System</span>
+      </button>
+      <button class="tab-btn" onclick="switchTab(2)">
+        Order Monitor
+        <span class="tab-sub">Data & Alerts</span>
+      </button>
+      <button class="tab-btn" onclick="switchTab(3)">
+        Outreach
+        <span class="tab-sub">Personalization</span>
+      </button>
+    </div>
+
+    <div class="tab-content reveal d2">
+      <!-- Tab 0: Email Triage -->
+      <div class="tab-panel active">
+        <div class="tab-inner">
+          <div class="tab-left">
+            <div class="tab-problem">A founder spent 45 minutes every morning sorting 50+ email replies. High-value leads kept getting buried under auto-replies and "not interested" messages.</div>
+            <div class="tab-solution">
+              <h4>What I built</h4>
+              <ol>
+                <li>Automation pulls the full thread and looks up the sender</li>
+                <li>Claude Code classifies: routine, needs judgment, or high-value</li>
+                <li>Routine sends auto. Judgment calls hit Slack. Hot leads go direct.</li>
+                <li>Every interaction updates CRM + queues SMS follow-up</li>
+              </ol>
+              <div class="tab-insight"><strong>Key insight:</strong> Most people automate all email or none. The value is in the split.</div>
+              <div class="tab-pills">
+                <span>Claude Code</span><span>Claude API</span><span>Make.com</span><span>GoHighLevel</span><span>Slack</span>
+              </div>
+            </div>
+          </div>
+          <div class="tab-right">
+            <div class="diagram-title">System Flow</div>
+            <div class="diagram">
+              <div class="diagram-row"><div class="box input">Inbound Email</div><div class="arrow"></div><div class="box ai">Classify</div></div>
+              <div class="arrow-down"></div>
+              <div class="diagram-branch"><div class="box output">Auto-Send</div><div class="box human">Approval</div><div class="box human">Escalate</div></div>
+              <div class="arrow-down"></div>
+              <div class="diagram-row"><div class="box output">CRM + SMS</div></div>
+            </div>
+            <div class="result-stat">
+              <div class="stat-num">82%</div>
+              <div class="stat-label">less time on email</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Tab 1: Content Pipeline -->
+      <div class="tab-panel">
+        <div class="tab-inner">
+          <div class="tab-left">
+            <div class="tab-problem">A content team wrote four versions of every idea weekly for different platforms. 6+ hours spent reformatting, not thinking.</div>
+            <div class="tab-solution">
+              <h4>What I built</h4>
+              <ol>
+                <li>Someone drops in a topic. That's the only input.</li>
+                <li>Claude Code runs platform-specific prompt templates</li>
+                <li>Four outputs come back formatted for each destination</li>
+                <li>Person reviews, tweaks, publishes</li>
+              </ol>
+              <div class="tab-insight"><strong>Key insight:</strong> The prompt templates are the real product. Encode platform rules well enough and output barely needs editing.</div>
+              <div class="tab-pills">
+                <span>Claude Code</span><span>Claude API</span><span>n8n</span>
+              </div>
+            </div>
+          </div>
+          <div class="tab-right">
+            <div class="diagram-title">System Flow</div>
+            <div class="diagram">
+              <div class="diagram-row"><div class="box input">Topic</div><div class="arrow"></div><div class="box ai">Variants</div></div>
+              <div class="arrow-down"></div>
+              <div class="diagram-branch"><div class="box output" style="font-size:0.6rem;">LinkedIn</div><div class="box output" style="font-size:0.6rem;">Twitter</div><div class="box output" style="font-size:0.6rem;">IG</div><div class="box output" style="font-size:0.6rem;">Email</div></div>
+              <div class="arrow-down"></div>
+              <div class="diagram-row"><div class="box human">Review</div></div>
+            </div>
+            <div class="result-stat">
+              <div class="stat-num">6hrs</div>
+              <div class="stat-label">saved per week</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Tab 2: Order Monitor -->
+      <div class="tab-panel">
+        <div class="tab-inner">
+          <div class="tab-left">
+            <div class="tab-problem">An e-commerce team processing hundreds of orders daily had no early warning system. Problems surfaced when customers complained.</div>
+            <div class="tab-solution">
+              <h4>What I built</h4>
+              <ol>
+                <li>Order data pulls in daily from the platform</li>
+                <li>Claude Code analyzes against rolling baselines</li>
+                <li>Sorted by severity: Normal = digest. Warning = Slack. Critical = ops lead.</li>
+                <li>Dashboard with trends and recommended actions</li>
+              </ol>
+              <div class="tab-insight"><strong>Key insight:</strong> Catching problems isn't hard. The value is context. Is a refund spike seasonal or something to act on?</div>
+              <div class="tab-pills">
+                <span>Claude Code</span><span>Python</span><span>Slack</span>
+              </div>
+            </div>
+          </div>
+          <div class="tab-right">
+            <div class="diagram-title">System Flow</div>
+            <div class="diagram">
+              <div class="diagram-row"><div class="box input">Orders</div><div class="arrow"></div><div class="box ai">Patterns</div></div>
+              <div class="arrow-down"></div>
+              <div class="diagram-branch"><div class="box output">Normal</div><div class="box human">Warning</div><div class="box alert">Alert</div></div>
+              <div class="arrow-down"></div>
+              <div class="diagram-row"><div class="box output">Dashboard</div></div>
+            </div>
+            <div class="result-stat">
+              <div class="stat-num">0</div>
+              <div class="stat-label">customer complaints before catch</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Tab 3: Outreach -->
+      <div class="tab-panel">
+        <div class="tab-inner">
+          <div class="tab-left">
+            <div class="tab-problem">Cold outreach has a template problem. People can tell in two seconds you didn't write it for them. Manual personalization caps at 5-10 messages/day.</div>
+            <div class="tab-solution">
+              <h4>What I built</h4>
+              <ol>
+                <li>Upload a CSV with whatever data you have per lead</li>
+                <li>System infers what someone in that role cares about</li>
+                <li>Claude Code writes a unique message per lead, not a template swap</li>
+                <li>Person spot-checks quality, then sends</li>
+              </ol>
+              <div class="tab-insight"><strong>Key insight:</strong> "Personalized" and "actually personal" are different things. Contextual reasoning makes outreach land.</div>
+              <div class="tab-pills">
+                <span>Claude Code</span><span>Python</span><span>CSV</span>
+              </div>
+            </div>
+          </div>
+          <div class="tab-right">
+            <div class="diagram-title">System Flow</div>
+            <div class="diagram">
+              <div class="diagram-row"><div class="box input">CSV of Leads</div><div class="arrow"></div><div class="box ai">Personalize</div></div>
+              <div class="arrow-down"></div>
+              <div class="diagram-branch"><div class="box human">Spot-Check</div><div class="arrow"></div><div class="box output">Unique Msgs</div></div>
+            </div>
+            <div class="result-stat">
+              <div class="stat-num">50+</div>
+              <div class="stat-label">personalized messages/day</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============================================ -->
+<!-- PROCESS (compact horizontal bar) -->
+<!-- ============================================ -->
+<section class="process-bar" id="process">
+  <div class="container reveal">
+    <div class="process-bar-label">How I Work</div>
+    <div class="process-steps">
+      <div class="p-step">
+        <div class="p-step-num">01</div>
+        <h4>Understand</h4>
+        <p>Map current process. Find where data lives, time is spent, things break.</p>
+      </div>
+      <div class="p-step">
+        <div class="p-step-num">02</div>
+        <h4>Design</h4>
+        <p>System diagram before build. What triggers what, where AI handles it, failure paths.</p>
+      </div>
+      <div class="p-step">
+        <div class="p-step-num">03</div>
+        <h4>Build & Test</h4>
+        <p>Built in pieces, tested against edge cases, verified with real data.</p>
+      </div>
+      <div class="p-step">
+        <div class="p-step-num">04</div>
+        <h4>Hand Off</h4>
+        <p>System, docs, video walkthrough. Everything is yours. Full ownership.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============================================ -->
+<!-- ABOUT + ROBOT -->
+<!-- ============================================ -->
+<section class="about">
+  <div class="about-inner">
+    <div>
+      <h2 class="about-heading reveal">Clear Thinking,<br>Clean Systems</h2>
+      <div class="about-text">
+        <p class="reveal d1">I build AI systems for businesses ready to move past "we should probably use AI." Claude Code is my main tool. I use it to design, build, and test everything from data pipelines to automated workflows.</p>
+        <p class="reveal d2">My process: understand how your team works, figure out what AI can handle, build it, hand it over with docs. Everything I build is yours.</p>
+      </div>
+    </div>
+    <div class="about-image reveal d2">
+      <img src="avatar-robot.png" alt="3D avatar with robot companion">
+    </div>
+  </div>
+</section>
+
+<!-- ============================================ -->
+<!-- CONTACT + GIANT CTA (merged) -->
+<!-- ============================================ -->
+<div class="contact-cta" id="contact">
+  <div class="contact-top reveal">
+    <div>
+      <div class="col-label">Profiles</div>
+      <a href="https://www.linkedin.com/in/ethan-palamos" target="_blank">LinkedIn</a><br>
+      <a href="https://www.upwork.com/freelancers/~01965e0bca1d60b7da?mp_source=share" target="_blank">Upwork</a><br>
+      <a href="https://www.onlinejobs.ph/jobseekers/info/1704419" target="_blank">OnlineJobs.ph</a>
+    </div>
+    <div>
+      <div class="col-label">Email</div>
+      <a href="mailto:palamosejr@gmail.com">palamosejr@gmail.com</a>
+    </div>
+    <div>
+      <div class="col-label">Availability</div>
+      Currently available<br>
+      Full-time / Retainer / Project
+    </div>
+    <div>
+      <div class="col-label">Location</div>
+      Manila, Philippines<br>
+      UTC+8
+    </div>
+  </div>
+
+  <div class="giant-cta reveal">
+    <div class="giant-cta-inner">
+      <div class="giant-cta-text">
+        <a href="mailto:palamosejr@gmail.com">REACH OUT</a>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+  // Reveal on scroll
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) entry.target.classList.add('visible');
+    });
+  }, { threshold: 0.1 });
+  document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+
+  // Background avatar scroll opacity
+  const bgAvatar = document.getElementById('bgAvatar');
+  const heroSection = document.getElementById('hero');
+  window.addEventListener('scroll', () => {
+    const scrollY = window.scrollY;
+    const heroBottom = heroSection.offsetHeight;
+    const docHeight = document.documentElement.scrollHeight - window.innerHeight;
+
+    if (scrollY <= heroBottom) {
+      // Still in hero -- hidden
+      bgAvatar.style.opacity = 0;
+    } else {
+      // Map scroll from heroBottom to docHeight => opacity 0.05 to 0.35
+      const progress = Math.min((scrollY - heroBottom) / (docHeight - heroBottom), 1);
+      const opacity = 0.05 + progress * 0.30;
+      bgAvatar.style.opacity = opacity;
+    }
+  });
+
+  // Tab switching
+  function switchTab(index) {
+    document.querySelectorAll('.tab-btn').forEach((btn, i) => {
+      btn.classList.toggle('active', i === index);
+    });
+    document.querySelectorAll('.tab-panel').forEach((panel, i) => {
+      panel.classList.toggle('active', i === index);
+    });
+  }
+</script>
+
+</body>
+</html>
