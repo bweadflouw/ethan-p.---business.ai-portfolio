@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Ethan P. — AI for Business</title>
+<title>Ethan P. — AI Systems Builder</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Space+Grotesk:wght@400;500;600;700;800;900&family=Caveat:wght@500;700&display=swap" rel="stylesheet">
 <style>
@@ -115,27 +115,44 @@
     font-size: 0.85rem; color: var(--text-muted); max-width: 300px; text-align: right;
   }
 
-  /* Tab nav */
+  /* Filter nav */
+  .filter-nav {
+    display: flex; gap: 0.5rem; margin-bottom: 1.5rem;
+  }
+  .filter-btn {
+    padding: 0.5rem 1.2rem; border-radius: 100px; border: 2px solid var(--border);
+    background: none; font-family: var(--font-display); font-size: 0.75rem;
+    font-weight: 700; text-transform: uppercase; letter-spacing: 0.05em;
+    color: var(--text-muted); cursor: pointer; transition: all 0.2s;
+  }
+  .filter-btn:hover { border-color: var(--text); color: var(--text); }
+  .filter-btn.active { background: var(--text); color: var(--bg); border-color: var(--text); }
+
+  /* Tab nav — 4x2 grid */
   .tab-nav {
-    display: flex; gap: 0; border: 1px solid var(--border);
-    border-radius: 8px; overflow: hidden; margin-bottom: 0;
+    display: grid; grid-template-columns: repeat(4, 1fr);
+    border: 1px solid var(--border);
+    border-radius: 8px 8px 0 0; overflow: hidden; margin-bottom: 0;
   }
   .tab-btn {
-    flex: 1; padding: 1rem 1.25rem; background: var(--bg); border: none;
-    font-family: var(--font-display); font-size: 0.78rem; font-weight: 700;
-    text-transform: uppercase; letter-spacing: 0.06em; color: var(--text-muted);
+    padding: 0.85rem 1rem; background: var(--bg); border: none;
+    font-family: var(--font-display); font-size: 0.72rem; font-weight: 700;
+    text-transform: uppercase; letter-spacing: 0.04em; color: var(--text-muted);
     cursor: pointer; transition: all 0.25s ease; position: relative;
-    border-right: 1px solid var(--border); text-align: center;
+    border-right: 1px solid var(--border); border-bottom: 1px solid var(--border);
+    text-align: center;
   }
-  .tab-btn:last-child { border-right: none; }
+  .tab-btn:nth-child(4n) { border-right: none; }
+  .tab-btn:nth-last-child(-n+4) { border-bottom: none; }
   .tab-btn:hover { background: rgba(0,0,0,0.03); color: var(--text); }
   .tab-btn.active {
     background: var(--text); color: var(--bg);
   }
   .tab-btn .tab-sub {
-    display: block; font-size: 0.65rem; font-weight: 500; margin-top: 0.25rem;
+    display: block; font-size: 0.6rem; font-weight: 500; margin-top: 0.2rem;
     text-transform: none; letter-spacing: 0; opacity: 0.6;
   }
+  .tab-btn.hidden { display: none; }
 
   /* Tab content */
   .tab-panel { display: none; }
@@ -231,6 +248,66 @@
     border: 4px solid transparent; border-top: 5px solid var(--text);
   }
   .diagram-branch { display: flex; gap: 0.5rem; justify-content: center; flex-wrap: wrap; margin: 0.15rem 0; }
+
+  /* ---- SHOWCASE ---- */
+  .showcase {
+    background: transparent; padding: 5rem 2.5rem;
+    border-top: 1px solid var(--border);
+  }
+  .showcase .container { max-width: 1100px; margin: 0 auto; }
+  .showcase-header {
+    text-align: center; margin-bottom: 1rem;
+  }
+  .showcase-header h2 {
+    font-family: var(--font-display); font-size: clamp(1.6rem, 4vw, 2.4rem);
+    font-weight: 700; color: var(--text); letter-spacing: -0.02em;
+  }
+  .showcase-header p {
+    font-size: 0.9rem; color: var(--text-muted); margin-top: 0.5rem;
+  }
+  .showcase-hint {
+    text-align: center; margin-bottom: 2.5rem;
+    font-size: 0.75rem; color: var(--text-muted); font-style: italic;
+  }
+  .showcase-grid {
+    display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem;
+  }
+  .showcase-item {
+    position: relative; border-radius: 8px; overflow: hidden;
+    cursor: pointer; transition: transform 0.2s;
+  }
+  .showcase-item:hover { transform: scale(1.02); }
+  .showcase-item img {
+    width: 100%; display: block;
+  }
+  .showcase-caption {
+    position: absolute; bottom: 0; left: 0; right: 0;
+    padding: 3rem 1.25rem 1rem;
+    background: linear-gradient(to top, rgba(0,0,0,0.7) 0%, rgba(0,0,0,0) 100%);
+    font-size: 0.78rem; color: rgba(255,255,255,0.7); line-height: 1.5;
+  }
+  .showcase-caption strong {
+    color: #fff; display: block; margin-bottom: 0.25rem;
+    font-family: var(--font-display); font-size: 0.82rem;
+  }
+
+  /* Lightbox */
+  .lightbox {
+    display: none; position: fixed; inset: 0; z-index: 999;
+    background: rgba(0,0,0,0.9); align-items: center; justify-content: center;
+    cursor: zoom-out;
+  }
+  .lightbox.open { display: flex; }
+  .lightbox img {
+    max-width: 92vw; max-height: 92vh; object-fit: contain; border-radius: 4px;
+  }
+  .lightbox-close {
+    position: absolute; top: 1.5rem; right: 2rem;
+    font-size: 2rem; color: #fff; background: none; border: none;
+    cursor: pointer; font-family: var(--font-display); font-weight: 700;
+    opacity: 0.7; transition: opacity 0.2s;
+  }
+  .lightbox-close:hover { opacity: 1; }
 
   /* ---- PROCESS (horizontal compact) ---- */
   .process-bar {
@@ -345,10 +422,13 @@
     .services { padding: 4rem 1.5rem; }
     .services-header { flex-direction: column; gap: 0.5rem; align-items: flex-start; }
     .services-header p { text-align: left; }
-    .tab-nav { flex-wrap: wrap; }
-    .tab-btn { flex: 1 1 45%; }
+    .filter-nav { flex-wrap: wrap; }
+    .tab-nav { grid-template-columns: repeat(2, 1fr); }
+    .tab-btn:nth-child(2n) { border-right: none; }
     .tab-inner { grid-template-columns: 1fr; }
     .tab-right { min-height: 300px; }
+    .showcase { padding: 3rem 1.5rem; }
+    .showcase-grid { grid-template-columns: 1fr; }
     .process-bar { padding: 2rem 1.5rem; }
     .process-bar .container { flex-direction: column; }
     .process-bar-label { writing-mode: horizontal-tb; transform: none; margin: 0 0 1rem 0; }
@@ -370,6 +450,7 @@
   <a href="#" class="logo">Ethan P.</a>
   <div class="nav-links">
     <a href="#work">Work</a>
+    <a href="#showcase">Gallery</a>
     <a href="#process">Process</a>
     <a href="#contact">Contact</a>
   </div>
@@ -381,12 +462,10 @@
 <section class="hero" id="hero">
   <div class="hero-text">
     <h1 class="reveal">
-      <span class="line">I build with</span>
-      <span class="line"><span class="thin">Claude Code.</span></span>
-      <span class="line">Your business</span>
-      <span class="line">runs better.</span>
+      <span class="line">AI systems</span>
+      <span class="line"><span class="thin">that work.</span></span>
     </h1>
-    <p class="hero-sub reveal d1">I build AI systems that plug directly into how your business operates. Data pipelines, automated workflows, monitoring. Claude Code does the heavy lifting.</p>
+    <p class="hero-sub reveal d1">Content, operations, automation. I build it with Claude Code so your team doesn't have to.</p>
     <div class="hero-cta reveal d2">
       <a href="#work" class="btn btn-dark">See my work</a>
       <a href="#contact" class="btn btn-outline">Get in touch</a>
@@ -398,37 +477,243 @@
 </section>
 
 <!-- ============================================ -->
-<!-- SECTION 2: WHAT I DO + CASE STUDIES (tabbed) -->
+<!-- SECTION 2: WHAT I BUILD (tabbed + filtered) -->
 <!-- ============================================ -->
 <section class="services" id="work">
   <div class="container">
     <div class="services-header reveal">
       <h2>What I build</h2>
-      <p>Click a project to see the problem, solution, and system diagram.</p>
+      <p>Filter by category, then click a project to see the problem, solution, and system diagram.</p>
     </div>
 
-    <div class="tab-nav reveal d1">
-      <button class="tab-btn active" onclick="switchTab(0)">
+    <!-- Filter buttons -->
+    <div class="filter-nav reveal d1">
+      <button class="filter-btn active" onclick="filterBuilds('all')">All</button>
+      <button class="filter-btn" onclick="filterBuilds('social')">Social Media AI</button>
+      <button class="filter-btn" onclick="filterBuilds('ops')">Business Automation</button>
+    </div>
+
+    <div class="tab-nav reveal d1" id="tabNav">
+      <!-- Social Media AI builds -->
+      <button class="tab-btn active" data-category="social" onclick="switchTab(0)">
+        Content Repurposer
+        <span class="tab-sub">Multi-Platform</span>
+      </button>
+      <button class="tab-btn" data-category="social" onclick="switchTab(1)">
+        Brand Voice Engine
+        <span class="tab-sub">Consistency</span>
+      </button>
+      <button class="tab-btn" data-category="social" onclick="switchTab(2)">
+        Calendar Autopilot
+        <span class="tab-sub">Publishing</span>
+      </button>
+      <button class="tab-btn" data-category="social" onclick="switchTab(3)">
+        Engagement Analyzer
+        <span class="tab-sub">Analytics</span>
+      </button>
+      <!-- Business Automation builds -->
+      <button class="tab-btn" data-category="ops" onclick="switchTab(4)">
+        Image Pipeline
+        <span class="tab-sub">Product Listings</span>
+      </button>
+      <button class="tab-btn" data-category="ops" onclick="switchTab(5)">
         Email Triage
         <span class="tab-sub">Workflow</span>
       </button>
-      <button class="tab-btn" onclick="switchTab(1)">
-        Content Pipeline
-        <span class="tab-sub">Content System</span>
-      </button>
-      <button class="tab-btn" onclick="switchTab(2)">
+      <button class="tab-btn" data-category="ops" onclick="switchTab(6)">
         Order Monitor
         <span class="tab-sub">Data & Alerts</span>
       </button>
-      <button class="tab-btn" onclick="switchTab(3)">
+      <button class="tab-btn" data-category="ops" onclick="switchTab(7)">
         Outreach
         <span class="tab-sub">Personalization</span>
       </button>
     </div>
 
     <div class="tab-content reveal d2">
-      <!-- Tab 0: Email Triage -->
-      <div class="tab-panel active">
+
+      <!-- Tab 0: Content Repurposer (social) -->
+      <div class="tab-panel active" data-category="social">
+        <div class="tab-inner">
+          <div class="tab-left">
+            <div class="tab-problem">A brand posts the same idea across 4 platforms but rewrites it from scratch each time. 8+ hours a week on reformatting, not strategy.</div>
+            <div class="tab-solution">
+              <h4>What I built</h4>
+              <ol>
+                <li>Drop in one long-form piece (blog, transcript, video script)</li>
+                <li>AI breaks it into platform-native posts: IG captions, TikTok hooks, LinkedIn articles, X threads</li>
+                <li>Each output follows platform-specific format rules and character limits</li>
+                <li>Review queue lets you tweak and approve before publishing</li>
+              </ol>
+              <div class="tab-insight"><strong>Key insight:</strong> One great idea should become 8-12 pieces of content. The bottleneck was never creativity, it was reformatting.</div>
+              <div class="tab-pills">
+                <span>Claude Code</span><span>Claude API</span><span>Prompt Templates</span>
+              </div>
+            </div>
+          </div>
+          <div class="tab-right">
+            <div class="diagram-title">System Flow</div>
+            <div class="diagram">
+              <div class="diagram-row"><div class="box input">Long-Form Content</div><div class="arrow"></div><div class="box ai">Repurpose</div></div>
+              <div class="arrow-down"></div>
+              <div class="diagram-branch"><div class="box output" style="font-size:0.6rem;">Instagram</div><div class="box output" style="font-size:0.6rem;">TikTok</div><div class="box output" style="font-size:0.6rem;">LinkedIn</div><div class="box output" style="font-size:0.6rem;">X</div></div>
+              <div class="arrow-down"></div>
+              <div class="diagram-row"><div class="box human">Review & Publish</div></div>
+            </div>
+            <div class="result-stat">
+              <div class="stat-num">4x</div>
+              <div class="stat-label">content output, same effort</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Tab 1: Brand Voice Engine (social) -->
+      <div class="tab-panel" data-category="social">
+        <div class="tab-inner">
+          <div class="tab-left">
+            <div class="tab-problem">A brand with multiple content creators kept getting inconsistent tone. One post sounds corporate, the next sounds like a teenager. No amount of style guides fixed it.</div>
+            <div class="tab-solution">
+              <h4>What I built</h4>
+              <ol>
+                <li>Feed in brand guidelines, tone samples, do's and don'ts</li>
+                <li>System creates a voice profile: vocabulary, sentence patterns, personality traits</li>
+                <li>Every piece of content runs through the voice engine before output</li>
+                <li>Built-in drift detection flags when output strays from brand DNA</li>
+              </ol>
+              <div class="tab-insight"><strong>Key insight:</strong> Brand voice isn't about word lists. It's about encoding the personality deeply enough that output sounds like one person wrote everything.</div>
+              <div class="tab-pills">
+                <span>Claude Code</span><span>Prompt Engineering</span><span>Brand Guides</span>
+              </div>
+            </div>
+          </div>
+          <div class="tab-right">
+            <div class="diagram-title">System Flow</div>
+            <div class="diagram">
+              <div class="diagram-row"><div class="box input">Brand DNA</div><div class="arrow"></div><div class="box ai">Voice Profile</div></div>
+              <div class="arrow-down"></div>
+              <div class="diagram-row"><div class="box input">Raw Content</div><div class="arrow"></div><div class="box ai">Voice Filter</div></div>
+              <div class="arrow-down"></div>
+              <div class="diagram-row"><div class="box output">On-Brand Output</div></div>
+            </div>
+            <div class="result-stat">
+              <div class="stat-num">100%</div>
+              <div class="stat-label">voice consistency across creators</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Tab 2: Calendar Autopilot (social) -->
+      <div class="tab-panel" data-category="social">
+        <div class="tab-inner">
+          <div class="tab-left">
+            <div class="tab-problem">Content manager spends Sunday nights building next week's calendar from scratch. No system for themes, no cadence logic, just vibes and deadlines.</div>
+            <div class="tab-solution">
+              <h4>What I built</h4>
+              <ol>
+                <li>Input monthly themes, campaign goals, and brand priorities</li>
+                <li>System generates a full content calendar with post types and draft copy</li>
+                <li>Cadence logic ensures mix of formats (carousel, reel, static, story)</li>
+                <li>Flags content gaps and suggests fills based on what performed before</li>
+              </ol>
+              <div class="tab-insight"><strong>Key insight:</strong> Consistency beats virality. A system that posts reliably on cadence outperforms sporadic "big idea" content every time.</div>
+              <div class="tab-pills">
+                <span>Claude Code</span><span>Claude API</span><span>Scheduling</span>
+              </div>
+            </div>
+          </div>
+          <div class="tab-right">
+            <div class="diagram-title">System Flow</div>
+            <div class="diagram">
+              <div class="diagram-row"><div class="box input">Themes & Goals</div><div class="arrow"></div><div class="box ai">Plan</div></div>
+              <div class="arrow-down"></div>
+              <div class="diagram-branch"><div class="box output" style="font-size:0.6rem;">Week 1</div><div class="box output" style="font-size:0.6rem;">Week 2</div><div class="box output" style="font-size:0.6rem;">Week 3</div><div class="box output" style="font-size:0.6rem;">Week 4</div></div>
+              <div class="arrow-down"></div>
+              <div class="diagram-row"><div class="box human">Review</div><div class="arrow"></div><div class="box output">Schedule</div></div>
+            </div>
+            <div class="result-stat">
+              <div class="stat-num">30</div>
+              <div class="stat-label">days of content in one sitting</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Tab 3: Engagement Analyzer (social) -->
+      <div class="tab-panel" data-category="social">
+        <div class="tab-inner">
+          <div class="tab-left">
+            <div class="tab-problem">Brand posts content and hopes for the best. No systematic way to know what's actually working, why, or what to do differently next week.</div>
+            <div class="tab-solution">
+              <h4>What I built</h4>
+              <ol>
+                <li>Pulls engagement data across platforms (likes, shares, saves, comments)</li>
+                <li>AI analyzes patterns: which formats, topics, posting times perform best</li>
+                <li>Generates weekly content brief with specific recommendations</li>
+                <li>Tracks algorithm shifts and flags when strategy needs adjusting</li>
+              </ol>
+              <div class="tab-insight"><strong>Key insight:</strong> Most brands look at vanity metrics. The value is in cross-referencing: what content drives saves (not just likes) and how that maps to actual conversions.</div>
+              <div class="tab-pills">
+                <span>Claude Code</span><span>Analytics APIs</span><span>Python</span>
+              </div>
+            </div>
+          </div>
+          <div class="tab-right">
+            <div class="diagram-title">System Flow</div>
+            <div class="diagram">
+              <div class="diagram-row"><div class="box input">Platform Data</div><div class="arrow"></div><div class="box ai">Analyze</div></div>
+              <div class="arrow-down"></div>
+              <div class="diagram-branch"><div class="box output" style="font-size:0.6rem;">Trends</div><div class="box output" style="font-size:0.6rem;">Winners</div><div class="box alert" style="font-size:0.6rem;">Shifts</div></div>
+              <div class="arrow-down"></div>
+              <div class="diagram-row"><div class="box output">Weekly Brief</div></div>
+            </div>
+            <div class="result-stat">
+              <div class="stat-num">2x</div>
+              <div class="stat-label">engagement within 6 weeks</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Tab 4: Product Listing Image Pipeline (ops) -->
+      <div class="tab-panel" data-category="ops">
+        <div class="tab-inner">
+          <div class="tab-left">
+            <div class="tab-problem">Managing product photos across multiple brands: 10-40 SKUs per batch, each needing consistent AI image prompts following strict brand guides. Manual prompt writing doesn't scale.</div>
+            <div class="tab-solution">
+              <h4>What I built</h4>
+              <ol>
+                <li>System organizes raw product images by SKU and category automatically</li>
+                <li>Reads brand guides to extract shot requirements, poses, lighting rules</li>
+                <li>Generates shot-by-shot AI image prompts per SKU, following brand DNA</li>
+                <li>Outputs prompt browsers for review and batch generation</li>
+              </ol>
+              <div class="tab-insight"><strong>Key insight:</strong> The prompt is the product. Encoding brand rules deeply enough means every SKU gets production-grade prompts without starting from scratch.</div>
+              <div class="tab-pills">
+                <span>Claude Code</span><span>Python</span><span>Brand Guides</span>
+              </div>
+            </div>
+          </div>
+          <div class="tab-right">
+            <div class="diagram-title">System Flow</div>
+            <div class="diagram">
+              <div class="diagram-row"><div class="box input">Raw Photos</div><div class="arrow"></div><div class="box ai">Organize</div></div>
+              <div class="arrow-down"></div>
+              <div class="diagram-row"><div class="box input">Brand Guide</div><div class="arrow"></div><div class="box ai">Prompts</div></div>
+              <div class="arrow-down"></div>
+              <div class="diagram-branch"><div class="box output">Prompt Browser</div><div class="arrow"></div><div class="box output">AI Images</div></div>
+            </div>
+            <div class="result-stat">
+              <div class="stat-num">100+</div>
+              <div class="stat-label">SKUs across 4+ brands</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Tab 5: Email Triage (ops) -->
+      <div class="tab-panel" data-category="ops">
         <div class="tab-inner">
           <div class="tab-left">
             <div class="tab-problem">A founder spent 45 minutes every morning sorting 50+ email replies. High-value leads kept getting buried under auto-replies and "not interested" messages.</div>
@@ -463,44 +748,8 @@
         </div>
       </div>
 
-      <!-- Tab 1: Content Pipeline -->
-      <div class="tab-panel">
-        <div class="tab-inner">
-          <div class="tab-left">
-            <div class="tab-problem">A content team wrote four versions of every idea weekly for different platforms. 6+ hours spent reformatting, not thinking.</div>
-            <div class="tab-solution">
-              <h4>What I built</h4>
-              <ol>
-                <li>Someone drops in a topic. That's the only input.</li>
-                <li>Claude Code runs platform-specific prompt templates</li>
-                <li>Four outputs come back formatted for each destination</li>
-                <li>Person reviews, tweaks, publishes</li>
-              </ol>
-              <div class="tab-insight"><strong>Key insight:</strong> The prompt templates are the real product. Encode platform rules well enough and output barely needs editing.</div>
-              <div class="tab-pills">
-                <span>Claude Code</span><span>Claude API</span><span>n8n</span>
-              </div>
-            </div>
-          </div>
-          <div class="tab-right">
-            <div class="diagram-title">System Flow</div>
-            <div class="diagram">
-              <div class="diagram-row"><div class="box input">Topic</div><div class="arrow"></div><div class="box ai">Variants</div></div>
-              <div class="arrow-down"></div>
-              <div class="diagram-branch"><div class="box output" style="font-size:0.6rem;">LinkedIn</div><div class="box output" style="font-size:0.6rem;">Twitter</div><div class="box output" style="font-size:0.6rem;">IG</div><div class="box output" style="font-size:0.6rem;">Email</div></div>
-              <div class="arrow-down"></div>
-              <div class="diagram-row"><div class="box human">Review</div></div>
-            </div>
-            <div class="result-stat">
-              <div class="stat-num">6hrs</div>
-              <div class="stat-label">saved per week</div>
-            </div>
-          </div>
-        </div>
-      </div>
-
-      <!-- Tab 2: Order Monitor -->
-      <div class="tab-panel">
+      <!-- Tab 6: Order Monitor (ops) -->
+      <div class="tab-panel" data-category="ops">
         <div class="tab-inner">
           <div class="tab-left">
             <div class="tab-problem">An e-commerce team processing hundreds of orders daily had no early warning system. Problems surfaced when customers complained.</div>
@@ -535,8 +784,8 @@
         </div>
       </div>
 
-      <!-- Tab 3: Outreach -->
-      <div class="tab-panel">
+      <!-- Tab 7: Outreach (ops) -->
+      <div class="tab-panel" data-category="ops">
         <div class="tab-inner">
           <div class="tab-left">
             <div class="tab-problem">Cold outreach has a template problem. People can tell in two seconds you didn't write it for them. Manual personalization caps at 5-10 messages/day.</div>
@@ -566,6 +815,50 @@
               <div class="stat-label">personalized messages/day</div>
             </div>
           </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- ============================================ -->
+<!-- SHOWCASE: Hyper-Realistic AI Fashion Pipeline -->
+<!-- ============================================ -->
+<section class="showcase" id="showcase">
+  <div class="container">
+    <div class="showcase-header reveal">
+      <h2>Hyper-Realistic AI Production</h2>
+      <p>100% synthetic. Zero studio. Zero models.</p>
+    </div>
+    <p class="showcase-hint reveal">Click any image to enlarge</p>
+    <div class="showcase-grid">
+      <div class="showcase-item reveal d1">
+        <img src="showcase-1.png" alt="Cover collage - sunglasses model, multiple angles">
+        <div class="showcase-caption">
+          <strong>Multi-Angle Product Showcase</strong>
+          Single AI character, multiple angles and compositions. Every shot consistent.
+        </div>
+      </div>
+      <div class="showcase-item reveal d2">
+        <img src="showcase-2.png" alt="Character and Style DNA - sunglasses">
+        <div class="showcase-caption">
+          <strong>Character & Style DNA</strong>
+          Consistent character identity across shots, angles, and lighting setups.
+        </div>
+      </div>
+      <div class="showcase-item reveal d1">
+        <img src="showcase-3.png" alt="Character and Style DNA - street style jewelry">
+        <div class="showcase-caption">
+          <strong>Style Transfer</strong>
+          Same character consistency applied to different product categories and aesthetics.
+        </div>
+      </div>
+      <div class="showcase-item reveal d2">
+        <img src="showcase-4.png" alt="Face swap - reference to consistent character across formal shots">
+        <div class="showcase-caption">
+          <strong>Face Swap Pipeline</strong>
+          Reference image in, consistent character across every formal and lifestyle shot.
         </div>
       </div>
     </div>
@@ -611,7 +904,7 @@
     <div>
       <h2 class="about-heading reveal">Clear Thinking,<br>Clean Systems</h2>
       <div class="about-text">
-        <p class="reveal d1">I build AI systems for businesses ready to move past "we should probably use AI." Claude Code is my main tool. I use it to design, build, and test everything from data pipelines to automated workflows.</p>
+        <p class="reveal d1">I build AI systems for content creation and business operations. Social media engines that produce platform-ready content at scale. Product pipelines that turn raw photos into listing-ready images. Automated workflows that replace hours of manual work.</p>
         <p class="reveal d2">My process: understand how your team works, figure out what AI can handle, build it, hand it over with docs. Everything I build is yours.</p>
       </div>
     </div>
@@ -657,6 +950,12 @@
   </div>
 </div>
 
+<!-- Lightbox -->
+<div class="lightbox" id="lightbox" onclick="closeLightbox()">
+  <button class="lightbox-close" onclick="closeLightbox()">&times;</button>
+  <img id="lightboxImg" src="" alt="">
+</div>
+
 <script>
   // Reveal on scroll
   const observer = new IntersectionObserver((entries) => {
@@ -675,10 +974,8 @@
     const docHeight = document.documentElement.scrollHeight - window.innerHeight;
 
     if (scrollY <= heroBottom) {
-      // Still in hero -- hidden
       bgAvatar.style.opacity = 0;
     } else {
-      // Map scroll from heroBottom to docHeight => opacity 0.05 to 0.35
       const progress = Math.min((scrollY - heroBottom) / (docHeight - heroBottom), 1);
       const opacity = 0.05 + progress * 0.30;
       bgAvatar.style.opacity = opacity;
@@ -694,6 +991,58 @@
       panel.classList.toggle('active', i === index);
     });
   }
+
+  // Filter builds by category
+  function filterBuilds(category) {
+    // Update filter buttons
+    document.querySelectorAll('.filter-btn').forEach(btn => {
+      btn.classList.toggle('active', btn.textContent.trim().toLowerCase().includes(
+        category === 'all' ? 'all' : category === 'social' ? 'social' : 'business'
+      ));
+    });
+
+    const tabBtns = document.querySelectorAll('.tab-btn');
+    const tabPanels = document.querySelectorAll('.tab-panel');
+
+    // Show/hide tabs based on category
+    let firstVisible = -1;
+    tabBtns.forEach((btn, i) => {
+      const cat = btn.getAttribute('data-category');
+      const visible = category === 'all' || cat === category;
+      btn.classList.toggle('hidden', !visible);
+      if (visible && firstVisible === -1) firstVisible = i;
+    });
+
+    // Activate first visible tab
+    if (firstVisible !== -1) {
+      switchTab(firstVisible);
+    }
+  }
+
+  // Lightbox
+  function openLightbox(src) {
+    document.getElementById('lightboxImg').src = src;
+    document.getElementById('lightbox').classList.add('open');
+    document.body.style.overflow = 'hidden';
+  }
+  function closeLightbox() {
+    document.getElementById('lightbox').classList.remove('open');
+    document.body.style.overflow = '';
+  }
+  document.addEventListener('keydown', e => { if (e.key === 'Escape') closeLightbox(); });
+  document.querySelectorAll('.showcase-item').forEach(item => {
+    item.addEventListener('click', () => {
+      const img = item.querySelector('img');
+      if (img) openLightbox(img.src);
+    });
+  });
+
+  // URL hash filtering
+  (function() {
+    const hash = window.location.hash;
+    if (hash === '#social') filterBuilds('social');
+    else if (hash === '#ops') filterBuilds('ops');
+  })();
 </script>
 
 </body>
