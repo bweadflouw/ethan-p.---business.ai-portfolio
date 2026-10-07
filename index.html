@@ -3,1049 +3,1015 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Ethan P. — AI Systems Builder</title>
+<title>Ethan P. — Reliable AI images and video</title>
+<meta name="description" content="AI is fast. I make it reliable. Product images and video that match the real product, checked before you see them. 3,700+ images delivered for 6 brands.">
+<link rel="icon" href="work/brand-face.webp">
 <link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Space+Grotesk:wght@400;500;600;700;800;900&family=Caveat:wght@500;700&display=swap" rel="stylesheet">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Space+Grotesk:wght@500;600;700&family=Caveat:wght@600&display=swap" rel="stylesheet">
 <style>
-  *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+/* ============ tokens ============ */
+:root {
+  --bg: #f4f0eb;
+  --paper: #fbf9f6;
+  --ink: #171614;
+  --ink-2: #57534c;
+  --ink-3: #8c867d;
+  --line: #e3ddd3;
+  --clay: #b4503f;
+  --clay-soft: #f1ddd6;
+  --olive: #5f6b3a;
+  --olive-soft: #e3e5d3;
+  --night: #171614;
+  --night-2: #211f1c;
+  --night-line: #34312c;
 
-  :root {
-    --bg: #F4F0EB;
-    --text: #111;
-    --text-secondary: #555;
-    --text-muted: #888;
-    --blue: #2563EB;
-    --blue-light: rgba(37,99,235,0.08);
-    --coral: #E8553D;
-    --emerald: #0F7B5F;
-    --amber: #D97706;
-    --border: rgba(0,0,0,0.1);
-    --font-display: 'Space Grotesk', sans-serif;
-    --font-body: 'Inter', sans-serif;
-    --font-hand: 'Caveat', cursive;
-  }
+  --display: 'Space Grotesk', system-ui, sans-serif;
+  --sans: 'Inter', system-ui, sans-serif;
+  --hand: 'Caveat', cursive;
 
-  html { scroll-behavior: smooth; }
-  body {
-    background: var(--bg);
-    color: var(--text);
-    font-family: var(--font-body);
-    font-size: 1rem;
-    line-height: 1.65;
-    overflow-x: hidden;
-  }
+  --r-lg: 20px;
+  --r-md: 14px;
+  --r-sm: 10px;
+  --ease: cubic-bezier(.2,.8,.2,1);
+}
+*, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+html { scroll-behavior: smooth; }
+body { background: var(--bg); color: var(--ink); font-family: var(--sans); font-size: 16px; line-height: 1.6; -webkit-font-smoothing: antialiased; }
+img, video { display: block; max-width: 100%; }
+img { height: auto; }
+a { color: inherit; }
+button { font: inherit; color: inherit; }
+.wrap { max-width: 1200px; margin: 0 auto; padding: 0 32px; }
 
-  /* ---- NAV ---- */
-  nav {
-    position: fixed; top: 0; left: 0; right: 0; z-index: 200;
-    padding: 1.5rem 2.5rem;
-    display: flex; justify-content: space-between; align-items: center;
-    background: rgba(244,240,235,0.9); backdrop-filter: blur(12px);
-    border-bottom: 1px solid var(--border);
-  }
-  nav .logo {
-    font-family: var(--font-display); font-weight: 800; font-size: 1rem;
-    color: var(--blue); text-decoration: none; letter-spacing: -0.02em;
-  }
-  nav .nav-links { display: flex; gap: 2rem; }
-  nav .nav-links a {
-    font-family: var(--font-display); font-size: 0.8rem; font-weight: 600;
-    color: var(--text); text-decoration: none; text-transform: uppercase; letter-spacing: 0.05em;
-    transition: color 0.2s;
-  }
-  nav .nav-links a:hover { color: var(--blue); }
+/* ============ type ============ */
+.kicker { display: inline-flex; align-items: center; gap: 10px; font-family: var(--display); font-size: .78rem; font-weight: 600; letter-spacing: .12em; text-transform: uppercase; color: var(--clay); margin-bottom: 16px; }
+.kicker::before { content: ''; width: 18px; height: 2px; background: currentColor; }
+h1, h2, h3 { font-family: var(--display); letter-spacing: -.02em; }
+h1 { font-weight: 700; font-size: clamp(2.4rem, 4.6vw, 3.55rem); line-height: 1.02; letter-spacing: -.035em; }
+h2 { font-weight: 700; font-size: clamp(1.9rem, 3.4vw, 2.7rem); line-height: 1.08; }
+h3 { font-weight: 600; font-size: 1.08rem; line-height: 1.3; }
+.lede { font-size: 1.08rem; color: var(--ink-2); max-width: 38em; }
+.hand { font-family: var(--hand); font-weight: 600; color: var(--clay); line-height: 1.1; }
 
-  /* ---- HERO ---- */
-  .hero {
-    min-height: 100vh; position: relative;
-    padding: 0 0 0 2.5rem; display: flex; align-items: flex-end;
-  }
-  .hero-text { padding-bottom: 6rem; position: relative; z-index: 1; }
-  .hero-image {
-    position: absolute; top: 0; right: -10%; bottom: 0; width: 80%;
-    display: flex; align-items: flex-end; justify-content: flex-end; z-index: 0;
-  }
-  .hero-image img { width: 100%; height: 100%; object-fit: contain; object-position: right bottom; }
-  .hero h1 {
-    font-family: var(--font-display);
-    font-size: clamp(3rem, 8vw, 6rem);
-    font-weight: 900; line-height: 0.95; letter-spacing: -0.04em;
-    color: var(--text); max-width: 700px;
-  }
-  .hero h1 .line { display: block; }
-  .hero h1 .thin { font-weight: 400; font-style: italic; }
-  .hero-sub {
-    margin-top: 2rem; font-size: 1rem; color: var(--text-secondary);
-    max-width: 420px; line-height: 1.7;
-  }
-  .hero-cta {
-    margin-top: 2rem; display: flex; gap: 1rem;
-  }
-  .btn {
-    display: inline-block; padding: 0.7rem 1.8rem; border-radius: 100px;
-    font-family: var(--font-display); font-weight: 600; font-size: 0.85rem;
-    text-decoration: none; transition: transform 0.2s, box-shadow 0.2s;
-    letter-spacing: 0.02em;
-  }
-  .btn:hover { transform: translateY(-2px); }
-  .btn-dark { background: var(--text); color: var(--bg); }
-  .btn-dark:hover { box-shadow: 0 4px 16px rgba(0,0,0,0.2); }
-  .btn-outline { background: none; color: var(--text); border: 2px solid var(--border); }
-  .btn-outline:hover { border-color: var(--text); }
+/* ============ nav ============ */
+nav { position: sticky; top: 0; z-index: 40; background: rgba(244,240,235,.86); backdrop-filter: saturate(1.4) blur(12px); border-bottom: 1px solid transparent; transition: border-color .3s; }
+nav.scrolled { border-bottom-color: var(--line); }
+nav .wrap { display: flex; justify-content: space-between; align-items: center; height: 68px; }
+.logo { display: flex; align-items: center; gap: 10px; font-family: var(--display); font-weight: 700; font-size: 1.05rem; text-decoration: none; }
+.logo .av { width: 34px; height: 34px; border-radius: 50%; background: var(--olive-soft); overflow: hidden; display: grid; place-items: end center; }
+.logo .av img { width: 30px; }
+nav ul { display: flex; align-items: center; gap: 30px; list-style: none; }
+nav ul a { text-decoration: none; font-size: .9rem; color: var(--ink-2); transition: color .2s; }
+nav ul a:hover { color: var(--ink); }
+nav .cta { padding: 9px 18px; border-radius: 999px; background: var(--ink); color: var(--bg); font-weight: 500; }
+nav .cta:hover { color: var(--bg); opacity: .88; }
 
-  /* ---- SECTION BASICS ---- */
-  section { position: relative; z-index: 1; }
-  .container { max-width: 1100px; margin: 0 auto; }
+/* ============ buttons ============ */
+.btns { display: flex; gap: 12px; flex-wrap: wrap; }
+.btn { display: inline-flex; align-items: center; gap: 8px; padding: 14px 24px; border-radius: 999px; font-size: .95rem; font-weight: 500; text-decoration: none; border: 1px solid var(--ink); transition: transform .2s var(--ease), background .2s, color .2s; }
+.btn:hover { transform: translateY(-2px); }
+.btn.primary { background: var(--ink); color: var(--bg); }
+.btn.ghost:hover { background: var(--ink); color: var(--bg); }
 
-  /* ---- SECTION 2: WHAT I DO + CASE STUDIES (merged interactive) ---- */
-  .services {
-    padding: 6rem 2.5rem;
-    border-top: 1px solid var(--border);
-  }
-  .services-header {
-    display: flex; justify-content: space-between; align-items: flex-end;
-    margin-bottom: 3rem;
-  }
-  .services-header h2 {
-    font-family: var(--font-display);
-    font-size: clamp(1.8rem, 4vw, 2.8rem);
-    font-weight: 700; line-height: 1.1; letter-spacing: -0.02em;
-  }
-  .services-header p {
-    font-size: 0.85rem; color: var(--text-muted); max-width: 300px; text-align: right;
-  }
+/* ============ hero ============ */
+.hero { position: relative; overflow: hidden; }
+.hero .wrap { display: grid; grid-template-columns: 1.1fr 1fr; gap: 24px; align-items: end; min-height: min(640px, calc(100vh - 68px - 108px)); padding-top: 48px; }
+.hero-copy { align-self: center; padding-bottom: 40px; }
+.hero-copy h1 { margin-bottom: 24px; }
+.hero-copy h1 em { font-style: normal; color: var(--clay); }
+.hero-copy .lede { margin-bottom: 32px; }
+.hero-art { position: relative; align-self: end; }
+.hero-art::before { content: ''; position: absolute; left: 50%; bottom: 0; width: 88%; aspect-ratio: 1; transform: translateX(-46%); border-radius: 50%;
+  background: radial-gradient(circle at 50% 55%, var(--olive-soft) 0%, rgba(227,229,211,.5) 45%, transparent 70%); }
+.hero-art img { position: relative; width: 100%; }
+.hero-art .note { position: absolute; left: -2%; top: 2%; display: flex; align-items: flex-start; gap: 4px; font-size: 1.45rem; transform: rotate(-4deg); }
+.hero-art .note svg { width: 54px; height: 40px; margin-top: 14px; flex: none; }
 
-  /* Filter nav */
-  .filter-nav {
-    display: flex; gap: 0.5rem; margin-bottom: 1.5rem;
-  }
-  .filter-btn {
-    padding: 0.5rem 1.2rem; border-radius: 100px; border: 2px solid var(--border);
-    background: none; font-family: var(--font-display); font-size: 0.75rem;
-    font-weight: 700; text-transform: uppercase; letter-spacing: 0.05em;
-    color: var(--text-muted); cursor: pointer; transition: all 0.2s;
-  }
-  .filter-btn:hover { border-color: var(--text); color: var(--text); }
-  .filter-btn.active { background: var(--text); color: var(--bg); border-color: var(--text); }
+/* ============ hero floor + facts ============ */
+.hero { border-bottom: 1.5px solid var(--ink); }
+.facts { display: flex; flex-wrap: wrap; gap: 8px 22px; margin-top: 36px; font-size: .86rem; color: var(--ink-2); }
+.facts span { display: inline-flex; align-items: center; gap: 8px; }
+.facts span::before { content: ''; width: 6px; height: 6px; border-radius: 50%; background: var(--olive); }
 
-  /* Tab nav — 4x2 grid */
-  .tab-nav {
-    display: grid; grid-template-columns: repeat(4, 1fr);
-    border: 1px solid var(--border);
-    border-radius: 8px 8px 0 0; overflow: hidden; margin-bottom: 0;
-  }
-  .tab-btn {
-    padding: 0.85rem 1rem; background: var(--bg); border: none;
-    font-family: var(--font-display); font-size: 0.72rem; font-weight: 700;
-    text-transform: uppercase; letter-spacing: 0.04em; color: var(--text-muted);
-    cursor: pointer; transition: all 0.25s ease; position: relative;
-    border-right: 1px solid var(--border); border-bottom: 1px solid var(--border);
-    text-align: center;
-  }
-  .tab-btn:nth-child(4n) { border-right: none; }
-  .tab-btn:nth-last-child(-n+4) { border-bottom: none; }
-  .tab-btn:hover { background: rgba(0,0,0,0.03); color: var(--text); }
-  .tab-btn.active {
-    background: var(--text); color: var(--bg);
-  }
-  .tab-btn .tab-sub {
-    display: block; font-size: 0.6rem; font-weight: 500; margin-top: 0.2rem;
-    text-transform: none; letter-spacing: 0; opacity: 0.6;
-  }
-  .tab-btn.hidden { display: none; }
+/* ============ one batch ============ */
+.batch-sec { }
+.batch-head { display: flex; justify-content: space-between; align-items: end; gap: 32px; margin-bottom: 36px; }
+.batch-head .sec-head { margin-bottom: 0; }
+.batch-hint { margin-left: auto; font-size: 1.2rem; }
+.batch { position: relative; border-radius: var(--r-lg); overflow: hidden; box-shadow: 0 30px 70px -40px rgba(23,22,20,.5); cursor: crosshair; }
+.batch img { width: 100%; }
+.batch .hl { position: absolute; outline: 2px solid #fff; outline-offset: -1px; pointer-events: none; opacity: 0; transition: opacity .15s; box-shadow: 0 0 0 9999px rgba(23,22,20,.35); }
+.lens { position: absolute; z-index: 3; width: 192px; pointer-events: none; opacity: 0; transform: scale(.94); transition: opacity .18s, transform .18s var(--ease); background: var(--paper); border-radius: 14px; padding: 6px; box-shadow: 0 24px 50px -16px rgba(0,0,0,.55); }
+.lens-img { width: 180px; height: 240px; border-radius: 10px; background-repeat: no-repeat; }
+.lens span { display: block; padding: 8px 6px 4px; font-size: .78rem; line-height: 1.35; color: var(--ink-2); }
+.lens span b { display: block; font-family: var(--display); font-weight: 600; color: var(--ink); font-size: .86rem; }
+.batch.on .lens, .batch.on .hl { opacity: 1; transform: none; }
+.batch-key { display: flex; flex-wrap: wrap; align-items: center; gap: 8px; margin-top: 16px; font-size: .84rem; color: var(--ink-3); }
+.batch-key b { font-weight: 500; color: var(--ink); background: var(--paper); border: 1px solid var(--line); border-radius: 999px; padding: 3px 11px; }
+.matrix { display: grid; grid-template-columns: 96px 1fr; gap: 14px; align-items: stretch; }
+.matrix-rows { display: grid; grid-template-rows: repeat(5, 1fr); font-size: .76rem; color: var(--ink-3); }
+.matrix-rows span { display: flex; align-items: center; justify-content: flex-end; text-align: right; line-height: 1.2; }
+.matrix .batch { overflow: visible; border-radius: 14px; }
+.matrix .batch img { border-radius: 14px; }
+.matrix .batch .hl { box-shadow: none; }
+.pair .duo img:first-child { object-fit: contain; }
+@media (max-width: 860px) { .matrix { grid-template-columns: 1fr; } .matrix-rows { display: none; } }
+@media (hover: none) { .lens, .batch .hl, .batch-hint { display: none; } .batch { cursor: default; } }
 
-  /* Tab content */
-  .tab-panel { display: none; }
-  .tab-panel.active { display: block; }
-  .tab-content {
-    border: 1px solid var(--border); border-top: none;
-    border-radius: 0 0 8px 8px; overflow: hidden;
-  }
-  .tab-inner {
-    display: grid; grid-template-columns: 1fr 1fr;
-    min-height: 420px;
-  }
-  .tab-left { order: 2; }
-  .tab-right { order: 1; }
+/* ============ story ============ */
+.story { display: grid; grid-template-columns: 1fr 1.05fr; gap: 64px; align-items: start; padding: 56px; background: var(--paper); border: 1px solid var(--line); border-radius: 28px; }
+.story blockquote { font-family: var(--display); font-weight: 600; font-size: clamp(1.7rem, 3vw, 2.4rem); line-height: 1.15; letter-spacing: -.025em; }
+.story blockquote em { font-style: normal; color: var(--clay); }
+.story-copy p { color: var(--ink-2); margin-bottom: 14px; }
+.story-copy p.big { font-family: var(--display); font-weight: 600; font-size: 1.3rem; color: var(--ink); letter-spacing: -.01em; }
 
-  /* Left: problem + solution */
-  .tab-left {
-    padding: 2.5rem; display: flex; flex-direction: column; justify-content: center;
-  }
-  .tab-problem {
-    font-size: 0.95rem; color: var(--text-secondary); line-height: 1.7;
-    margin-bottom: 1.5rem; padding-bottom: 1.5rem; border-bottom: 1px solid var(--border);
-  }
-  .tab-solution { }
-  .tab-solution h4 {
-    font-family: var(--font-display); font-size: 0.95rem; font-weight: 700;
-    margin-bottom: 0.75rem;
-  }
-  .tab-solution ol {
-    padding-left: 1.25rem; font-size: 0.85rem; color: var(--text-secondary); line-height: 1.7;
-  }
-  .tab-solution li { margin-bottom: 0.3rem; }
-  .tab-insight {
-    border-left: 3px solid var(--coral); padding: 0.6rem 0.8rem;
-    margin-top: 1.25rem; background: rgba(232,85,61,0.06);
-    font-size: 0.82rem; line-height: 1.5; color: var(--text-secondary);
-  }
-  .tab-pills { margin-top: 1rem; }
-  .tab-pills span {
-    display: inline-block; font-size: 0.65rem; font-weight: 600;
-    text-transform: uppercase; letter-spacing: 0.04em;
-    padding: 0.2rem 0.55rem; border: 1px solid var(--border);
-    border-radius: 100px; margin: 0.15rem 0.1rem; color: var(--text-secondary);
-  }
+/* ============ tabs ============ */
+.tabs { display: inline-flex; padding: 4px; border-radius: 999px; background: var(--paper); border: 1px solid var(--line); }
+.tabs button { border: 0; background: none; padding: 8px 18px; border-radius: 999px; font-size: .88rem; color: var(--ink-2); cursor: pointer; transition: background .25s, color .25s; }
+.tabs button.on { background: var(--ink); color: var(--bg); }
+.tabpanel { display: none; }
+.tabpanel.on { display: block; animation: fadeUp .45s var(--ease); }
+@keyframes fadeUp { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: none; } }
+.panel-top { display: flex; justify-content: space-between; align-items: center; gap: 24px; flex-wrap: wrap; margin-bottom: 20px; }
+.panel-top p { color: var(--ink-2); max-width: 40em; }
+.panel-top .seg { margin-bottom: 0; }
 
-  /* Right: diagram */
-  .tab-right {
-    background: var(--text); display: flex; flex-direction: column;
-    align-items: center; justify-content: center; padding: 2.5rem;
-    position: relative;
-  }
-  .tab-right .diagram-title {
-    font-family: var(--font-display); font-size: 0.65rem; font-weight: 700;
-    text-transform: uppercase; letter-spacing: 0.12em; color: rgba(244,240,235,0.4);
-    margin-bottom: 2rem;
-  }
-  .tab-right .box {
-    background: rgba(244,240,235,0.08); border-color: rgba(244,240,235,0.2); color: var(--bg);
-  }
-  .tab-right .box.input { border-color: rgba(244,240,235,0.5); background: rgba(244,240,235,0.1); }
-  .tab-right .box.ai { border-color: var(--bg); background: var(--bg); color: var(--text); font-weight: 700; }
-  .tab-right .box.output { border-color: #34d399; background: rgba(52,211,153,0.12); color: #34d399; }
-  .tab-right .box.human { border-color: #fbbf24; background: rgba(251,191,36,0.12); color: #fbbf24; }
-  .tab-right .box.alert { border-color: #f87171; background: rgba(248,113,113,0.12); color: #f87171; }
-  .tab-right .arrow { background: rgba(244,240,235,0.3); }
-  .tab-right .arrow::after { border-left-color: rgba(244,240,235,0.3); }
-  .tab-right .arrow-down { background: rgba(244,240,235,0.3); }
-  .tab-right .arrow-down::after { border-top-color: rgba(244,240,235,0.3); }
-  .tab-right .result-stat {
-    margin-top: 2rem; text-align: center;
-  }
-  .tab-right .stat-num {
-    font-family: var(--font-display); font-size: 2.5rem; font-weight: 900; color: var(--emerald);
-  }
-  .tab-right .stat-label {
-    font-size: 0.75rem; color: rgba(244,240,235,0.5); margin-top: 0.25rem;
-  }
+/* ============ sections ============ */
+section { padding: 128px 0 0; }
+.sec-head { max-width: 760px; margin-bottom: 48px; }
+.sec-head h2 { margin-bottom: 16px; }
 
-  /* Diagram shared */
-  .diagram { display: flex; flex-direction: column; align-items: center; gap: 0; }
-  .diagram-row { display: flex; align-items: center; gap: 0.4rem; flex-wrap: wrap; justify-content: center; }
-  .box {
-    border: 2px solid var(--border); border-radius: 8px;
-    padding: 0.5rem 0.8rem; text-align: center;
-    font-weight: 600; font-size: 0.72rem; min-width: 80px;
-  }
-  .arrow { width: 24px; height: 2px; background: var(--text); position: relative; flex-shrink: 0; }
-  .arrow::after {
-    content: ''; position: absolute; right: -1px; top: 50%; transform: translateY(-50%);
-    border: 4px solid transparent; border-left: 5px solid var(--text);
-  }
-  .arrow-down { width: 2px; height: 16px; background: var(--text); position: relative; margin: 0 auto; }
-  .arrow-down::after {
-    content: ''; position: absolute; bottom: -1px; left: 50%; transform: translateX(-50%);
-    border: 4px solid transparent; border-top: 5px solid var(--text);
-  }
-  .diagram-branch { display: flex; gap: 0.5rem; justify-content: center; flex-wrap: wrap; margin: 0.15rem 0; }
+/* catalog feature */
+.feature { display: grid; grid-template-columns: 440px 1fr; gap: 56px; align-items: center; margin-bottom: 56px; }
+.compare { position: relative; aspect-ratio: 3/4; border-radius: var(--r-lg); overflow: hidden; background: #fff; box-shadow: 0 30px 60px -30px rgba(23,22,20,.45); user-select: none; touch-action: pan-y; }
+.compare img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; pointer-events: none; }
+.compare img:first-child { object-fit: contain; background: #fff; }
+.compare .after { clip-path: inset(0 0 0 var(--pos, 50%)); }
+.compare .bar { position: absolute; top: 0; bottom: 0; left: var(--pos, 50%); width: 2px; background: #fff; transform: translateX(-1px); pointer-events: none; }
+.compare .knob { position: absolute; top: 50%; left: var(--pos, 50%); transform: translate(-50%,-50%); width: 46px; height: 46px; border-radius: 50%; background: #fff; display: grid; place-items: center; box-shadow: 0 4px 18px rgba(0,0,0,.25); pointer-events: none; }
+.compare .knob svg { width: 22px; height: 22px; }
+.compare input { position: absolute; inset: 0; width: 100%; height: 100%; opacity: 0; cursor: ew-resize; }
+.compare .tag { position: absolute; top: 14px; padding: 5px 11px; border-radius: 999px; font-size: .72rem; font-weight: 500; background: rgba(23,22,20,.78); color: #fff; pointer-events: none; backdrop-filter: blur(4px); }
+.compare .tag.l { left: 14px; } .compare .tag.r { right: 14px; background: var(--clay); }
+.feature-copy h3 { font-size: 1.5rem; margin-bottom: 14px; }
+.feature-copy p { color: var(--ink-2); margin-bottom: 14px; }
+.feature-copy ul { list-style: none; margin-top: 22px; display: grid; gap: 12px; }
+.feature-copy li { display: flex; gap: 12px; align-items: baseline; font-size: .95rem; }
+.feature-copy li::before { content: ''; width: 8px; height: 8px; border-radius: 50%; background: var(--clay); flex: none; transform: translateY(-1px); }
 
-  /* ---- SHOWCASE ---- */
-  .showcase {
-    background: transparent; padding: 5rem 2.5rem;
-    border-top: 1px solid var(--border);
-  }
-  .showcase .container { max-width: 1100px; margin: 0 auto; }
-  .showcase-header {
-    text-align: center; margin-bottom: 1rem;
-  }
-  .showcase-header h2 {
-    font-family: var(--font-display); font-size: clamp(1.6rem, 4vw, 2.4rem);
-    font-weight: 700; color: var(--text); letter-spacing: -0.02em;
-  }
-  .showcase-header p {
-    font-size: 0.9rem; color: var(--text-muted); margin-top: 0.5rem;
-  }
-  .showcase-hint {
-    text-align: center; margin-bottom: 2.5rem;
-    font-size: 0.75rem; color: var(--text-muted); font-style: italic;
-  }
-  .showcase-grid {
-    display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem;
-  }
-  .showcase-item {
-    position: relative; border-radius: 8px; overflow: hidden;
-    cursor: pointer; transition: transform 0.2s;
-  }
-  .showcase-item:hover { transform: scale(1.02); }
-  .showcase-item img {
-    width: 100%; display: block;
-  }
-  .showcase-caption {
-    position: absolute; bottom: 0; left: 0; right: 0;
-    padding: 3rem 1.25rem 1rem;
-    background: linear-gradient(to top, rgba(0,0,0,0.7) 0%, rgba(0,0,0,0) 100%);
-    font-size: 0.78rem; color: rgba(255,255,255,0.7); line-height: 1.5;
-  }
-  .showcase-caption strong {
-    color: #fff; display: block; margin-bottom: 0.25rem;
-    font-family: var(--font-display); font-size: 0.82rem;
-  }
+.pairs { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; }
+.pair { background: var(--paper); border: 1px solid var(--line); border-radius: var(--r-md); overflow: hidden; transition: transform .3s var(--ease), box-shadow .3s; }
+.pair:hover { transform: translateY(-3px); box-shadow: 0 18px 40px -24px rgba(23,22,20,.35); }
+.pair .duo { position: relative; display: grid; grid-template-columns: 1fr 1fr; gap: 2px; background: var(--line); }
+.pair .duo img { width: 100%; aspect-ratio: 3/4; object-fit: cover; background: #fff; }
+.pair .duo .arrow { position: absolute; left: 50%; top: 50%; transform: translate(-50%,-50%); width: 30px; height: 30px; border-radius: 50%; background: var(--paper); display: grid; place-items: center; font-size: .85rem; box-shadow: 0 2px 8px rgba(0,0,0,.15); }
+.pair .info { padding: 14px 16px 16px; }
+.pair .info b { display: block; font-family: var(--display); font-weight: 600; font-size: .96rem; }
+.pair .info span { font-size: .82rem; color: var(--ink-3); }
 
-  /* Lightbox */
-  .lightbox {
-    display: none; position: fixed; inset: 0; z-index: 999;
-    background: rgba(0,0,0,0.9); align-items: center; justify-content: center;
-    cursor: zoom-out;
-  }
-  .lightbox.open { display: flex; }
-  .lightbox img {
-    max-width: 92vw; max-height: 92vh; object-fit: contain; border-radius: 4px;
-  }
-  .lightbox-close {
-    position: absolute; top: 1.5rem; right: 2rem;
-    font-size: 2rem; color: #fff; background: none; border: none;
-    cursor: pointer; font-family: var(--font-display); font-weight: 700;
-    opacity: 0.7; transition: opacity 0.2s;
-  }
-  .lightbox-close:hover { opacity: 1; }
+/* sub-heading inside a section */
+.subhead { display: flex; justify-content: space-between; align-items: baseline; gap: 16px; flex-wrap: wrap; margin: 72px 0 20px; padding-top: 40px; border-top: 1px solid var(--line); }
+.subhead h3 { font-size: 1.35rem; }
+.subhead p { color: var(--ink-3); font-size: .92rem; }
 
-  /* ---- PROCESS (horizontal compact) ---- */
-  .process-bar {
-    border-top: 1px solid var(--border);
-    padding: 3rem 2.5rem;
-  }
-  .process-bar .container {
-    display: flex; align-items: flex-start; gap: 0;
-  }
-  .process-bar-label {
-    font-family: var(--font-display); font-size: 0.65rem; font-weight: 700;
-    text-transform: uppercase; letter-spacing: 0.15em; color: var(--text-muted);
-    writing-mode: vertical-rl; transform: rotate(180deg);
-    margin-right: 2rem; white-space: nowrap; padding-top: 0.5rem;
-  }
-  .process-steps {
-    display: grid; grid-template-columns: repeat(4, 1fr);
-    gap: 0; flex: 1; border: 1px solid var(--border);
-  }
-  .p-step {
-    padding: 1.5rem; position: relative;
-    border-right: 1px solid var(--border);
-  }
-  .p-step:last-child { border-right: none; }
-  .p-step-num {
-    font-family: var(--font-display); font-size: 2rem; font-weight: 900;
-    color: var(--text); opacity: 0.06; position: absolute; top: 0.75rem; right: 1rem;
-  }
-  .p-step h4 {
-    font-family: var(--font-display); font-size: 0.85rem; font-weight: 700; margin-bottom: 0.4rem;
-  }
-  .p-step p {
-    font-size: 0.78rem; color: var(--text-secondary); line-height: 1.5; margin: 0;
-  }
+.thumb { cursor: zoom-in; }
 
-  /* ---- ABOUT + ROBOT ---- */
-  .about {
-    padding: 6rem 2.5rem; border-top: 1px solid var(--border);
-  }
-  .about-inner {
-    max-width: 1100px; margin: 0 auto;
-    display: grid; grid-template-columns: 1fr 1fr;
-    gap: 4rem; align-items: center;
-  }
-  .about-heading {
-    font-family: var(--font-display);
-    font-size: clamp(1.6rem, 3vw, 2.2rem);
-    font-weight: 700; line-height: 1.15; letter-spacing: -0.02em;
-    margin-bottom: 1.5rem;
-  }
-  .about-text p {
-    font-size: 0.95rem; color: var(--text-secondary); line-height: 1.75; margin-bottom: 1.25rem;
-  }
-  .about-image img { width: 100%; display: block; }
+/* ============ QA ============ */
+.qa { background: var(--night); color: #e9e5de; border-radius: var(--r-lg); overflow: hidden; box-shadow: 0 40px 80px -40px rgba(23,22,20,.6); outline: none; }
+.qa-top { display: flex; justify-content: space-between; align-items: center; gap: 24px; flex-wrap: wrap; padding: 14px 20px; border-bottom: 1px solid var(--night-line); background: var(--night-2); }
+.qa-title { display: flex; align-items: center; gap: 14px; }
+.qa-title .dots { display: flex; gap: 6px; }
+.qa-title .dots i { width: 11px; height: 11px; border-radius: 50%; background: var(--night-line); }
+.qa-title b { font-family: var(--display); font-weight: 600; font-size: .92rem; color: #fff; }
+.qa-progress { flex: 1; max-width: 340px; min-width: 200px; }
+.qa-progress .row { display: flex; justify-content: space-between; font-size: .74rem; color: #a59f95; margin-bottom: 6px; }
+.qa-progress .row .flagged { color: #e08a78; }
+.qa-progress .track { background: var(--night-line); height: 6px; border-radius: 4px; overflow: hidden; display: flex; }
+.qa-progress .fill { background: #a3b06d; height: 100%; width: 0; transition: width .35s var(--ease); }
+.qa-progress .fill.fl { background: #d0644f; }
+.qa-body { display: grid; grid-template-columns: 250px 1fr; }
+.qa-list { border-right: 1px solid var(--night-line); padding: 10px; display: flex; flex-direction: column; gap: 2px; }
+.qa-item { display: grid; grid-template-columns: 38px 1fr auto; gap: 10px; align-items: center; padding: 8px; border-radius: 10px; border: 0; background: none; text-align: left; cursor: pointer; transition: background .2s; }
+.qa-item:hover { background: var(--night-2); }
+.qa-item.on { background: #2b2824; }
+.qa-item img { width: 38px; height: 48px; object-fit: cover; border-radius: 6px; }
+.qa-item b { display: block; font-size: .82rem; font-weight: 500; color: #e9e5de; line-height: 1.25; }
+.qa-item small { font-size: .7rem; color: #8f897f; }
+.qa-item .pips4 { display: flex; gap: 3px; }
+.qa-item .pips4 i { width: 6px; height: 6px; border-radius: 50%; background: var(--night-line); }
+.qa-item .pips4 i.done { background: #a3b06d; }
+.qa-item .pips4 i.flag { background: #d0644f; }
+.qa-main { padding: 20px; display: grid; grid-template-columns: 1fr 1fr 210px; gap: 16px; align-content: start; }
+.qa-view { position: relative; border-radius: 12px; overflow: hidden; background: #111; }
+.qa-view img { width: 100%; aspect-ratio: 3/4; object-fit: cover; }
+.qa-view .lab { position: absolute; left: 10px; top: 10px; font-size: .64rem; font-weight: 600; letter-spacing: .08em; text-transform: uppercase; background: rgba(0,0,0,.66); color: #fff; padding: 4px 9px; border-radius: 999px; backdrop-filter: blur(4px); }
+.qa-view.ref { outline: 1px dashed #4a463f; outline-offset: -1px; background: #fff; }
+.qa-view.shot { outline: 2px solid transparent; outline-offset: -2px; transition: outline-color .25s; }
+.qa-view.shot.done { outline-color: #a3b06d; }
+.qa-view.shot.flag { outline-color: #d0644f; }
+.qa-view .stamp { position: absolute; right: 10px; top: 10px; font-size: .64rem; font-weight: 700; letter-spacing: .08em; text-transform: uppercase; padding: 4px 9px; border-radius: 999px; opacity: 0; transform: scale(.8); transition: all .25s var(--ease); }
+.qa-view.done .stamp { opacity: 1; transform: none; background: #a3b06d; color: var(--night); }
+.qa-view.flag .stamp { opacity: 1; transform: none; background: #d0644f; color: #fff; }
+.qa-side { display: flex; flex-direction: column; gap: 10px; }
+.qa-side h4 { font-family: var(--display); font-size: 1rem; font-weight: 600; color: #fff; line-height: 1.25; }
+.qa-side .meta { font-size: .76rem; color: #8f897f; margin-bottom: 4px; }
+.risk { align-self: flex-start; font-size: .64rem; font-weight: 600; text-transform: uppercase; letter-spacing: .06em; border-radius: 999px; padding: 3px 10px; }
+.risk.risky { color: #f0a493; background: rgba(180,80,63,.2); }
+.risk.easy { color: #bcc78f; background: rgba(95,107,58,.3); }
+.qa-side .why { font-size: .78rem; color: #a59f95; line-height: 1.5; padding: 10px 12px; border-radius: 10px; background: var(--night-2); }
+.qa-btn { display: flex; justify-content: space-between; align-items: center; width: 100%; padding: 11px 14px; border-radius: 10px; border: 1px solid var(--night-line); background: transparent; color: #e9e5de; font-size: .86rem; font-weight: 500; cursor: pointer; transition: all .2s; }
+.qa-btn kbd { font-family: var(--sans); font-size: .68rem; padding: 2px 7px; border-radius: 5px; border: 1px solid currentColor; opacity: .55; }
+.qa-btn.ok:hover, .qa-btn.ok.on { background: #a3b06d; border-color: #a3b06d; color: var(--night); }
+.qa-btn.fl:hover, .qa-btn.fl.on { background: #d0644f; border-color: #d0644f; color: #fff; }
+.qa-side .spacer { flex: 1; }
+.qa-side .hint { font-size: .7rem; color: #77726a; }
+.qa-strip { grid-column: 2 / 4; display: grid; grid-template-columns: repeat(4, 1fr); gap: 10px; }
+.qa-strip button { position: relative; padding: 0; border: 0; border-radius: 9px; overflow: hidden; cursor: pointer; background: #111; outline: 2px solid transparent; outline-offset: 2px; transition: outline-color .2s, opacity .2s; opacity: .6; }
+.qa-strip button:hover { opacity: .9; }
+.qa-strip button.on { opacity: 1; outline-color: #e9e5de; }
+.qa-strip img { width: 100%; aspect-ratio: 1; object-fit: cover; object-position: 50% 20%; }
+.qa-strip span { position: absolute; left: 6px; bottom: 6px; font-size: .62rem; font-weight: 600; background: rgba(0,0,0,.6); color: #fff; padding: 2px 7px; border-radius: 999px; }
+.qa-strip i { position: absolute; right: 6px; top: 6px; width: 9px; height: 9px; border-radius: 50%; background: rgba(255,255,255,.25); }
+.qa-strip i.done { background: #a3b06d; }
+.qa-strip i.flag { background: #d0644f; }
+.qa-reflabel { grid-column: 1; align-self: start; font-size: .76rem; color: #8f897f; padding-top: 4px; line-height: 1.5; }
+.qa-foot { font-size: .84rem; color: var(--ink-3); margin-top: 16px; }
 
-  /* ---- CONTACT + CTA (merged) ---- */
-  .contact-cta {
-    border-top: 1px solid var(--border); position: relative; overflow: hidden; z-index: 1;
-  }
-  .contact-top {
-    display: grid; grid-template-columns: repeat(4, 1fr); gap: 2rem;
-    padding: 3rem 2.5rem; max-width: 1100px; margin: 0 auto;
-    font-size: 0.8rem; color: var(--text-secondary);
-  }
-  .contact-top a { color: var(--text); text-decoration: none; font-weight: 500; }
-  .contact-top a:hover { text-decoration: underline; }
-  .col-label {
-    font-size: 0.65rem; text-transform: uppercase; letter-spacing: 0.08em;
-    color: var(--text-muted); margin-bottom: 0.3rem; font-weight: 600;
-  }
-  /* Fixed background avatar */
-  .bg-avatar {
-    position: fixed; bottom: 0; left: 50%; transform: translateX(-50%);
-    height: 90vh; width: auto; z-index: 0;
-    pointer-events: none; opacity: 0;
-    transition: opacity 0.1s linear;
-  }
+/* ============ apparel ============ */
+.seg { display: inline-flex; padding: 4px; border-radius: 999px; background: var(--paper); border: 1px solid var(--line); margin-bottom: 24px; }
+.seg button { border: 0; background: none; padding: 8px 20px; border-radius: 999px; font-size: .9rem; color: var(--ink-2); cursor: pointer; display: flex; align-items: center; gap: 8px; transition: background .25s, color .25s; }
+.seg button i { width: 12px; height: 12px; border-radius: 50%; border: 1px solid rgba(0,0,0,.2); }
+.seg button.on { background: var(--ink); color: var(--bg); }
+.shots { display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px; }
+.shots figure { transition: opacity .3s; }
+.shots img { width: 100%; aspect-ratio: 2/3; object-fit: cover; border-radius: var(--r-md); background: var(--paper); }
+.shots figcaption { display: flex; gap: 8px; align-items: baseline; font-size: .84rem; margin-top: 10px; color: var(--ink-3); }
+.shots figcaption b { font-family: var(--display); font-weight: 600; color: var(--clay); font-size: .78rem; }
 
-  .giant-cta {
-    position: relative; text-align: center; overflow: hidden;
-    padding: 0 2.5rem; border-top: 1px solid var(--border);
-  }
-  .giant-cta-inner {
-    position: relative; min-height: 500px;
-    display: flex; align-items: flex-end; justify-content: center;
-  }
-  .giant-cta-text {
-    font-family: var(--font-display);
-    font-size: clamp(5rem, 15vw, 14rem);
-    font-weight: 900; line-height: 0.9; letter-spacing: -0.05em;
-    color: var(--text); text-align: center; cursor: default;
-    position: relative; z-index: 2; padding-bottom: 1rem;
-  }
-  .giant-cta-text a { color: inherit; text-decoration: none; transition: color 0.3s; }
-  .giant-cta-text a:hover { color: var(--text-secondary); }
+/* ============ jewelry ============ */
+.jw { display: grid; grid-template-columns: 1.4fr 1fr 1fr; grid-template-rows: auto auto; gap: 14px; }
 
-  /* ---- ANIMATIONS ---- */
-  .reveal { opacity: 0; transform: translateY(30px); transition: opacity 0.7s ease, transform 0.7s ease; }
-  .reveal.visible { opacity: 1; transform: translateY(0); }
-  .d1 { transition-delay: 0.1s; }
-  .d2 { transition-delay: 0.2s; }
-  .d3 { transition-delay: 0.3s; }
+.jw img { width: 100%; height: 100%; object-fit: cover; border-radius: var(--r-md); background: #fff; }
+.jw .model { grid-row: span 2; }
+.jw .sq { aspect-ratio: 1; }
+.jw-wrap { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
 
-  /* ---- RESPONSIVE ---- */
-  @media (max-width: 768px) {
-    nav { padding: 1rem 1.5rem; }
-    nav .nav-links { gap: 1rem; }
-    nav .nav-links a { font-size: 0.7rem; }
-    .hero { padding: 0 1.5rem; }
-    .hero-image { width: 100%; right: 0; opacity: 0.2; }
-    .hero h1 { font-size: 2.5rem; }
-    .services { padding: 4rem 1.5rem; }
-    .services-header { flex-direction: column; gap: 0.5rem; align-items: flex-start; }
-    .services-header p { text-align: left; }
-    .filter-nav { flex-wrap: wrap; }
-    .tab-nav { grid-template-columns: repeat(2, 1fr); }
-    .tab-btn:nth-child(2n) { border-right: none; }
-    .tab-inner { grid-template-columns: 1fr; }
-    .tab-right { min-height: 300px; }
-    .showcase { padding: 3rem 1.5rem; }
-    .showcase-grid { grid-template-columns: 1fr; }
-    .process-bar { padding: 2rem 1.5rem; }
-    .process-bar .container { flex-direction: column; }
-    .process-bar-label { writing-mode: horizontal-tb; transform: none; margin: 0 0 1rem 0; }
-    .process-steps { grid-template-columns: 1fr 1fr; }
-    .p-step { border-bottom: 1px solid var(--border); }
-    .about { padding: 4rem 1.5rem; }
-    .about-inner { grid-template-columns: 1fr; gap: 2rem; }
-    .contact-top { grid-template-columns: 1fr 1fr; }
-    .giant-cta-text { font-size: 3rem; }
-  }
+/* ============ reels (dark band) ============ */
+.band { background: var(--night); color: #e9e5de; margin-top: 128px; padding: 112px 0 104px; overflow: hidden; }
+.band .kicker { color: #e08a78; }
+.band .lede { color: #a59f95; }
+.reel-head { display: flex; justify-content: space-between; align-items: end; gap: 24px; flex-wrap: wrap; margin-bottom: 48px; }
+.reel-head .sec-head { margin-bottom: 0; }
+.arrows { display: flex; gap: 10px; }
+.arrows button { width: 48px; height: 48px; border-radius: 50%; border: 1px solid var(--night-line); background: transparent; color: #e9e5de; cursor: pointer; display: grid; place-items: center; transition: background .2s, border-color .2s; }
+.arrows button:hover { background: #e9e5de; color: var(--night); border-color: #e9e5de; }
+.arrows svg { width: 18px; height: 18px; }
+.stage { position: relative; height: var(--stage-h, 600px); touch-action: pan-y; }
+.reel { position: absolute; left: 50%; top: 0; width: var(--card-w, 320px); aspect-ratio: 9/16; border-radius: 22px; overflow: hidden; background: var(--night-2); cursor: pointer;
+  transform: translateX(calc(-50% + var(--x, 0px))) translateY(var(--hy, 0px)) scale(calc(var(--s, 1) * var(--hs, 1))); transform-origin: 50% 50%;
+  opacity: var(--o, 1); z-index: var(--z, 1);
+  transition: transform .7s var(--ease), opacity .7s var(--ease), box-shadow .7s var(--ease); will-change: transform; }
+.reel.instant { transition: none; }
+.reel video { width: 100%; height: 100%; object-fit: cover; }
+.reel .shade { position: absolute; inset: 0; background: var(--night); opacity: calc(var(--shade, 0) * var(--hd, 1)); transition: opacity .7s var(--ease); pointer-events: none; }
+.reel.center { box-shadow: 0 0 0 1px rgba(255,255,255,.1); }
+.stage::before { content: ""; position: absolute; left: 50%; top: 50%; width: calc(var(--card-w) * 2.2); height: calc(var(--card-w) * 2.2); transform: translate(-50%,-50%); border-radius: 50%; background: radial-gradient(circle, rgba(224,138,120,.14), transparent 65%); pointer-events: none; }
+.reel:not(.center):hover { --hs: 1.06; --hy: -10px; --hd: .35; }
+.reel .play { position: absolute; left: 50%; top: 50%; transform: translate(-50%,-50%) scale(var(--ps, 1)); width: 64px; height: 64px; border-radius: 50%; background: rgba(255,255,255,.92); display: grid; place-items: center; pointer-events: none; transition: opacity .35s, transform .35s var(--ease); }
+.reel .play::before { content: ''; border-left: 18px solid var(--night); border-top: 11px solid transparent; border-bottom: 11px solid transparent; margin-left: 5px; }
+.reel:not(.center) .play { opacity: 0; }
+.reel.center.sound .play { opacity: 0; --ps: .7; }
+.reel .mute { position: absolute; right: 12px; top: 12px; width: 34px; height: 34px; border-radius: 50%; background: rgba(0,0,0,.5); color: #fff; display: grid; place-items: center; opacity: 0; transition: opacity .3s; pointer-events: none; }
+.reel.center .mute { opacity: 1; }
+.reel .mute svg { width: 16px; height: 16px; }
+.reel-caption { text-align: center; margin-top: 28px; min-height: 52px; }
+.reel-caption b { display: block; font-family: var(--display); font-weight: 600; font-size: 1.1rem; color: #fff; transition: opacity .3s; }
+.reel-caption span { font-size: .86rem; color: #8f897f; }
+.pips { display: flex; gap: 8px; justify-content: center; margin-top: 18px; }
+.pips button { width: 8px; height: 8px; border-radius: 999px; border: 0; background: var(--night-line); cursor: pointer; padding: 0; transition: width .4s var(--ease), background .3s; }
+.pips button.on { width: 28px; background: #e08a78; }
+
+/* ============ process ============ */
+.steps { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; counter-reset: s; }
+.step { position: relative; background: var(--paper); border: 1px solid var(--line); border-radius: var(--r-md); padding: 26px; counter-increment: s; }
+.step::before { content: counter(s, decimal-leading-zero); display: block; font-family: var(--display); font-weight: 700; font-size: .85rem; color: var(--clay); margin-bottom: 14px; }
+.step h3 { margin-bottom: 8px; }
+.step p { font-size: .92rem; color: var(--ink-2); }
+.step.hl { background: var(--ink); color: var(--bg); border-color: var(--ink); }
+.step.hl p { color: #b9b3a9; }
+.step.hl::before { color: #e08a78; }
+.lesson { display: grid; grid-template-columns: 1fr 1.1fr; gap: 48px; align-items: center; margin-top: 56px; padding-top: 48px; border-top: 1px solid var(--line); }
+.lesson blockquote { font-family: var(--display); font-weight: 600; font-size: clamp(1.5rem, 2.6vw, 2rem); line-height: 1.2; letter-spacing: -.02em; }
+.lesson blockquote em { font-style: normal; color: var(--clay); }
+.lesson p { color: var(--ink-2); }
+
+/* ============ tools ============ */
+.tools { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; }
+.tool { background: var(--paper); border: 1px solid var(--line); border-radius: var(--r-md); padding: 26px; display: flex; flex-direction: column; gap: 10px; }
+.tool .ico { width: 42px; height: 42px; border-radius: 12px; background: var(--olive-soft); color: var(--olive); display: grid; place-items: center; margin-bottom: 6px; }
+.tool .ico svg { width: 22px; height: 22px; }
+.tool p { font-size: .92rem; color: var(--ink-2); }
+.tool .tag { margin-top: auto; padding-top: 8px; font-size: .74rem; font-weight: 600; letter-spacing: .06em; text-transform: uppercase; color: var(--olive); }
+
+/* ============ about + contact ============ */
+.about { display: grid; grid-template-columns: .9fr 1.1fr; gap: 64px; align-items: end; }
+.about-art { position: relative; border-bottom: 1.5px solid var(--ink); }
+.about-art::before { content: ''; position: absolute; left: 50%; bottom: 0; width: 92%; aspect-ratio: 1; transform: translateX(-50%); border-radius: 50%; background: radial-gradient(circle at 50% 60%, var(--clay-soft) 0%, rgba(241,221,214,.5) 45%, transparent 70%); }
+.about-art img { position: relative; width: 88%; margin: 0 auto; }
+.about-art .note { position: absolute; right: 0; top: 6%; font-size: 1.4rem; transform: rotate(5deg); }
+.about-copy { padding-bottom: 8px; }
+.about-copy h2 { margin-bottom: 20px; }
+.about-copy p { color: var(--ink-2); margin-bottom: 16px; }
+.stack { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 24px; }
+.stack span { font-size: .82rem; background: var(--paper); border: 1px solid var(--line); padding: 6px 13px; border-radius: 999px; }
+
+.contact { margin-top: 128px; }
+.contact-card { position: relative; display: grid; grid-template-columns: 1.3fr 1fr; gap: 48px; background: var(--ink); color: var(--bg); border-radius: 28px; padding: 64px; overflow: hidden; }
+.contact-card h2 { font-size: clamp(2rem, 4vw, 3.2rem); margin-bottom: 18px; }
+.contact-card h2 em { font-style: normal; color: #e08a78; }
+.contact-card p { color: #b9b3a9; margin-bottom: 30px; max-width: 30em; }
+.contact-card .btn.primary { background: var(--bg); color: var(--ink); border-color: var(--bg); }
+.contact-card .btn.ghost { border-color: #4a463f; color: var(--bg); }
+.contact-card .btn.ghost:hover { background: var(--bg); color: var(--ink); }
+.contact-card dl { display: grid; gap: 20px; align-content: start; padding-top: 6px; }
+.contact-card dt { font-size: .72rem; font-weight: 600; text-transform: uppercase; letter-spacing: .12em; color: #8f897f; margin-bottom: 2px; }
+.contact-card dd a { text-decoration: none; border-bottom: 1px solid #4a463f; transition: border-color .2s; }
+.contact-card dd a:hover { border-color: var(--bg); }
+.contact-card .face { position: absolute; right: 48px; bottom: 0; width: 150px; opacity: .95; }
+.status { display: inline-flex; align-items: center; gap: 8px; }
+.status::before { content: ''; width: 8px; height: 8px; border-radius: 50%; background: #a3b06d; box-shadow: 0 0 0 4px rgba(163,176,109,.2); }
+
+footer { padding: 40px 0 48px; }
+footer .wrap { display: flex; justify-content: space-between; gap: 16px; flex-wrap: wrap; font-size: .82rem; color: var(--ink-3); }
+
+/* ============ lightbox ============ */
+.lb { position: fixed; inset: 0; z-index: 60; background: rgba(23,22,20,.94); display: grid; place-items: center; padding: 32px; opacity: 0; pointer-events: none; transition: opacity .3s; cursor: zoom-out; }
+.lb.open { opacity: 1; pointer-events: auto; }
+.lb img { max-height: 90vh; max-width: 92vw; border-radius: var(--r-sm); transform: scale(.96); transition: transform .35s var(--ease); }
+.lb.open img { transform: none; }
+
+/* ============ reveal ============ */
+.rv { opacity: 0; transform: translateY(18px); transition: opacity .8s var(--ease), transform .8s var(--ease); }
+.rv.in { opacity: 1; transform: none; }
+
+/* ============ responsive ============ */
+@media (max-width: 1080px) {
+  .feature { grid-template-columns: 360px 1fr; gap: 40px; }
+  .pairs, .tools { grid-template-columns: repeat(2, 1fr); }
+  .contact-card .face { display: none; }
+}
+@media (max-width: 860px) {
+  .wrap { padding: 0 20px; }
+  .story { grid-template-columns: 1fr; gap: 24px; padding: 32px 24px; border-radius: 20px; }
+  .batch-sec { padding-top: 80px; }
+  .batch-head { display: block; }
+  .facts { margin-top: 28px; }
+  nav ul li:not(:last-child) { display: none; }
+  .hero .wrap { grid-template-columns: 1fr; min-height: 0; gap: 0; padding-top: 40px; }
+  .hero-copy { padding-bottom: 32px; }
+  .hero-art .note { font-size: 1.15rem; top: -10%; left: 0; }
+  .hero-art { margin-top: 36px; }
+  section { padding-top: 96px; }
+  .feature { grid-template-columns: 1fr; }
+  .compare { max-width: 420px; }
+  .shots { grid-template-columns: repeat(2, 1fr); }
+  .jw-wrap { grid-template-columns: 1fr; }
+  .steps { grid-template-columns: 1fr 1fr; }
+  .lesson, .about { grid-template-columns: 1fr; gap: 32px; }
+  .about-art { max-width: 420px; }
+  .qa-body { grid-template-columns: 1fr; }
+  .qa-list { flex-direction: row; overflow-x: auto; border-right: 0; border-bottom: 1px solid var(--night-line); }
+  .qa-item { grid-template-columns: 38px; flex: none; }
+  .qa-item div, .qa-item .pips4 { display: none; }
+  .qa-main { grid-template-columns: 1fr 1fr; padding: 14px; }
+  .qa-side { grid-column: 1 / 3; }
+  .qa-side .spacer, .qa-side .hint, .qa-btn kbd { display: none; }
+  .qa-strip { grid-column: 1 / 3; }
+  .qa-reflabel { display: none; }
+  .band { margin-top: 96px; padding: 80px 0; }
+  .contact { margin-top: 96px; }
+  .contact-card { grid-template-columns: 1fr; padding: 40px 28px; border-radius: 22px; }
+}
+@media (max-width: 560px) {
+  .pairs, .tools, .steps { grid-template-columns: 1fr; }
+  .arrows { display: none; }
+}
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after { transition-duration: .01ms !important; }
+  .rv { opacity: 1; transform: none; }
+}
 </style>
 </head>
 <body>
 
-<img src="avatar-front.png" alt="" class="bg-avatar" id="bgAvatar">
-
-<!-- NAV -->
-<nav>
-  <a href="#" class="logo">Ethan P.</a>
-  <div class="nav-links">
-    <a href="#work">Work</a>
-    <a href="#showcase">Gallery</a>
-    <a href="#process">Process</a>
-    <a href="#contact">Contact</a>
+<nav id="nav">
+  <div class="wrap">
+    <a class="logo" href="#"><span class="av"><img src="work/brand-face.webp" alt=""></span>Ethan P.</a>
+    <ul>
+      <li><a href="#catalog">Images</a></li>
+      <li><a href="#reels">Video</a></li>
+      <li><a href="#qa">Quality checks</a></li>
+      <li><a href="#process">Process</a></li>
+      <li><a class="cta" href="#contact">Hire me</a></li>
+    </ul>
   </div>
 </nav>
 
-<!-- ============================================ -->
-<!-- HERO -->
-<!-- ============================================ -->
-<section class="hero" id="hero">
-  <div class="hero-text">
-    <h1 class="reveal">
-      <span class="line">AI systems</span>
-      <span class="line"><span class="thin">that work.</span></span>
-    </h1>
-    <p class="hero-sub reveal d1">Content, operations, automation. I build it with Claude Code so your team doesn't have to.</p>
-    <div class="hero-cta reveal d2">
-      <a href="#work" class="btn btn-dark">See my work</a>
-      <a href="#contact" class="btn btn-outline">Get in touch</a>
+<!-- ============ HERO ============ -->
+<header class="hero">
+  <div class="wrap">
+    <div class="hero-copy">
+      <div class="kicker">AI images, video and workflows</div>
+      <h1>AI is fast. I make it <em>reliable.</em></h1>
+      <p class="lede">AI can make a hundred product photos in an hour. Some of them will get your product wrong. I make sure they don't, so what you get looks professional, matches the real thing and is ready to use.</p>
+      <div class="btns">
+        <a class="btn primary" href="#catalog">See the results</a>
+        <a class="btn ghost" href="#contact">Get in touch</a>
+      </div>
+      <p class="facts"><span>3,700+ images delivered</span><span>6 brands</span><span>1.5 years with AI tools</span><span>Manila, PH</span></p>
+    </div>
+    <div class="hero-art">
+      <img src="work/brand-desk.webp" alt="3D avatar of Ethan working at his desk" width="1500" height="1014">
+      <div class="note hand">that's me,<br>double-checking the AI
+        <svg viewBox="0 0 54 40" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M2 6c16 2 34 10 44 28"/><path d="M38 30l8 5 2-9"/></svg>
+      </div>
     </div>
   </div>
-  <div class="hero-image">
-    <img src="hero-avatar.png" alt="3D avatar working at desk">
-  </div>
-</section>
+</header>
 
-<!-- ============================================ -->
-<!-- SECTION 2: WHAT I BUILD (tabbed + filtered) -->
-<!-- ============================================ -->
-<section class="services" id="work">
-  <div class="container">
-    <div class="services-header reveal">
-      <h2>What I build</h2>
-      <p>Filter by category, then click a project to see the problem, solution, and system diagram.</p>
-    </div>
+<main>
 
-    <!-- Filter buttons -->
-    <div class="filter-nav reveal d1">
-      <button class="filter-btn active" onclick="filterBuilds('all')">All</button>
-      <button class="filter-btn" onclick="filterBuilds('social')">Social Media AI</button>
-      <button class="filter-btn" onclick="filterBuilds('ops')">Business Automation</button>
-    </div>
-
-    <div class="tab-nav reveal d1" id="tabNav">
-      <!-- Social Media AI builds -->
-      <button class="tab-btn active" data-category="social" onclick="switchTab(0)">
-        Content Repurposer
-        <span class="tab-sub">Multi-Platform</span>
-      </button>
-      <button class="tab-btn" data-category="social" onclick="switchTab(1)">
-        Brand Voice Engine
-        <span class="tab-sub">Consistency</span>
-      </button>
-      <button class="tab-btn" data-category="social" onclick="switchTab(2)">
-        Calendar Autopilot
-        <span class="tab-sub">Publishing</span>
-      </button>
-      <button class="tab-btn" data-category="social" onclick="switchTab(3)">
-        Engagement Analyzer
-        <span class="tab-sub">Analytics</span>
-      </button>
-      <!-- Business Automation builds -->
-      <button class="tab-btn" data-category="ops" onclick="switchTab(4)">
-        Image Pipeline
-        <span class="tab-sub">Product Listings</span>
-      </button>
-      <button class="tab-btn" data-category="ops" onclick="switchTab(5)">
-        Email Triage
-        <span class="tab-sub">Workflow</span>
-      </button>
-      <button class="tab-btn" data-category="ops" onclick="switchTab(6)">
-        Order Monitor
-        <span class="tab-sub">Data & Alerts</span>
-      </button>
-      <button class="tab-btn" data-category="ops" onclick="switchTab(7)">
-        Outreach
-        <span class="tab-sub">Personalization</span>
-      </button>
-    </div>
-
-    <div class="tab-content reveal d2">
-
-      <!-- Tab 0: Content Repurposer (social) -->
-      <div class="tab-panel active" data-category="social">
-        <div class="tab-inner">
-          <div class="tab-left">
-            <div class="tab-problem">A brand posts the same idea across 4 platforms but rewrites it from scratch each time. 8+ hours a week on reformatting, not strategy.</div>
-            <div class="tab-solution">
-              <h4>What I built</h4>
-              <ol>
-                <li>Drop in one long-form piece (blog, transcript, video script)</li>
-                <li>AI breaks it into platform-native posts: IG captions, TikTok hooks, LinkedIn articles, X threads</li>
-                <li>Each output follows platform-specific format rules and character limits</li>
-                <li>Review queue lets you tweak and approve before publishing</li>
-              </ol>
-              <div class="tab-insight"><strong>Key insight:</strong> One great idea should become 8-12 pieces of content. The bottleneck was never creativity, it was reformatting.</div>
-              <div class="tab-pills">
-                <span>Claude Code</span><span>Claude API</span><span>Prompt Templates</span>
-              </div>
-            </div>
-          </div>
-          <div class="tab-right">
-            <div class="diagram-title">System Flow</div>
-            <div class="diagram">
-              <div class="diagram-row"><div class="box input">Long-Form Content</div><div class="arrow"></div><div class="box ai">Repurpose</div></div>
-              <div class="arrow-down"></div>
-              <div class="diagram-branch"><div class="box output" style="font-size:0.6rem;">Instagram</div><div class="box output" style="font-size:0.6rem;">TikTok</div><div class="box output" style="font-size:0.6rem;">LinkedIn</div><div class="box output" style="font-size:0.6rem;">X</div></div>
-              <div class="arrow-down"></div>
-              <div class="diagram-row"><div class="box human">Review & Publish</div></div>
-            </div>
-            <div class="result-stat">
-              <div class="stat-num">4x</div>
-              <div class="stat-label">content output, same effort</div>
-            </div>
-          </div>
-        </div>
+<!-- ============ STORY ============ -->
+<section id="story">
+  <div class="wrap">
+    <div class="story rv">
+      <div>
+        <div class="kicker">Why reliability</div>
+        <blockquote>&ldquo;The original photo is the rule. AI only changes the <em>setting.</em>&rdquo;</blockquote>
       </div>
-
-      <!-- Tab 1: Brand Voice Engine (social) -->
-      <div class="tab-panel" data-category="social">
-        <div class="tab-inner">
-          <div class="tab-left">
-            <div class="tab-problem">A brand with multiple content creators kept getting inconsistent tone. One post sounds corporate, the next sounds like a teenager. No amount of style guides fixed it.</div>
-            <div class="tab-solution">
-              <h4>What I built</h4>
-              <ol>
-                <li>Feed in brand guidelines, tone samples, do's and don'ts</li>
-                <li>System creates a voice profile: vocabulary, sentence patterns, personality traits</li>
-                <li>Every piece of content runs through the voice engine before output</li>
-                <li>Built-in drift detection flags when output strays from brand DNA</li>
-              </ol>
-              <div class="tab-insight"><strong>Key insight:</strong> Brand voice isn't about word lists. It's about encoding the personality deeply enough that output sounds like one person wrote everything.</div>
-              <div class="tab-pills">
-                <span>Claude Code</span><span>Prompt Engineering</span><span>Brand Guides</span>
-              </div>
-            </div>
-          </div>
-          <div class="tab-right">
-            <div class="diagram-title">System Flow</div>
-            <div class="diagram">
-              <div class="diagram-row"><div class="box input">Brand DNA</div><div class="arrow"></div><div class="box ai">Voice Profile</div></div>
-              <div class="arrow-down"></div>
-              <div class="diagram-row"><div class="box input">Raw Content</div><div class="arrow"></div><div class="box ai">Voice Filter</div></div>
-              <div class="arrow-down"></div>
-              <div class="diagram-row"><div class="box output">On-Brand Output</div></div>
-            </div>
-            <div class="result-stat">
-              <div class="stat-num">100%</div>
-              <div class="stat-label">voice consistency across creators</div>
-            </div>
-          </div>
-        </div>
+      <div class="story-copy">
+        <p class="big">On one job, 34 out of 72 images came back with mistakes.</p>
+        <p>Colours were off, details were missing, the product looked slightly different. The AI wasn't the problem. My instructions were pulling it away from the real product photo.</p>
+        <p>So I changed how I work. Every job starts from the real product photo, and every image is checked against it before anyone sees it. Each mistake I've caught since is written down, over 50 rules now, so it doesn't happen twice.</p>
       </div>
-
-      <!-- Tab 2: Calendar Autopilot (social) -->
-      <div class="tab-panel" data-category="social">
-        <div class="tab-inner">
-          <div class="tab-left">
-            <div class="tab-problem">Content manager spends Sunday nights building next week's calendar from scratch. No system for themes, no cadence logic, just vibes and deadlines.</div>
-            <div class="tab-solution">
-              <h4>What I built</h4>
-              <ol>
-                <li>Input monthly themes, campaign goals, and brand priorities</li>
-                <li>System generates a full content calendar with post types and draft copy</li>
-                <li>Cadence logic ensures mix of formats (carousel, reel, static, story)</li>
-                <li>Flags content gaps and suggests fills based on what performed before</li>
-              </ol>
-              <div class="tab-insight"><strong>Key insight:</strong> Consistency beats virality. A system that posts reliably on cadence outperforms sporadic "big idea" content every time.</div>
-              <div class="tab-pills">
-                <span>Claude Code</span><span>Claude API</span><span>Scheduling</span>
-              </div>
-            </div>
-          </div>
-          <div class="tab-right">
-            <div class="diagram-title">System Flow</div>
-            <div class="diagram">
-              <div class="diagram-row"><div class="box input">Themes & Goals</div><div class="arrow"></div><div class="box ai">Plan</div></div>
-              <div class="arrow-down"></div>
-              <div class="diagram-branch"><div class="box output" style="font-size:0.6rem;">Week 1</div><div class="box output" style="font-size:0.6rem;">Week 2</div><div class="box output" style="font-size:0.6rem;">Week 3</div><div class="box output" style="font-size:0.6rem;">Week 4</div></div>
-              <div class="arrow-down"></div>
-              <div class="diagram-row"><div class="box human">Review</div><div class="arrow"></div><div class="box output">Schedule</div></div>
-            </div>
-            <div class="result-stat">
-              <div class="stat-num">30</div>
-              <div class="stat-label">days of content in one sitting</div>
-            </div>
-          </div>
-        </div>
-      </div>
-
-      <!-- Tab 3: Engagement Analyzer (social) -->
-      <div class="tab-panel" data-category="social">
-        <div class="tab-inner">
-          <div class="tab-left">
-            <div class="tab-problem">Brand posts content and hopes for the best. No systematic way to know what's actually working, why, or what to do differently next week.</div>
-            <div class="tab-solution">
-              <h4>What I built</h4>
-              <ol>
-                <li>Pulls engagement data across platforms (likes, shares, saves, comments)</li>
-                <li>AI analyzes patterns: which formats, topics, posting times perform best</li>
-                <li>Generates weekly content brief with specific recommendations</li>
-                <li>Tracks algorithm shifts and flags when strategy needs adjusting</li>
-              </ol>
-              <div class="tab-insight"><strong>Key insight:</strong> Most brands look at vanity metrics. The value is in cross-referencing: what content drives saves (not just likes) and how that maps to actual conversions.</div>
-              <div class="tab-pills">
-                <span>Claude Code</span><span>Analytics APIs</span><span>Python</span>
-              </div>
-            </div>
-          </div>
-          <div class="tab-right">
-            <div class="diagram-title">System Flow</div>
-            <div class="diagram">
-              <div class="diagram-row"><div class="box input">Platform Data</div><div class="arrow"></div><div class="box ai">Analyze</div></div>
-              <div class="arrow-down"></div>
-              <div class="diagram-branch"><div class="box output" style="font-size:0.6rem;">Trends</div><div class="box output" style="font-size:0.6rem;">Winners</div><div class="box alert" style="font-size:0.6rem;">Shifts</div></div>
-              <div class="arrow-down"></div>
-              <div class="diagram-row"><div class="box output">Weekly Brief</div></div>
-            </div>
-            <div class="result-stat">
-              <div class="stat-num">2x</div>
-              <div class="stat-label">engagement within 6 weeks</div>
-            </div>
-          </div>
-        </div>
-      </div>
-
-      <!-- Tab 4: Product Listing Image Pipeline (ops) -->
-      <div class="tab-panel" data-category="ops">
-        <div class="tab-inner">
-          <div class="tab-left">
-            <div class="tab-problem">Managing product photos across multiple brands: 10-40 SKUs per batch, each needing consistent AI image prompts following strict brand guides. Manual prompt writing doesn't scale.</div>
-            <div class="tab-solution">
-              <h4>What I built</h4>
-              <ol>
-                <li>System organizes raw product images by SKU and category automatically</li>
-                <li>Reads brand guides to extract shot requirements, poses, lighting rules</li>
-                <li>Generates shot-by-shot AI image prompts per SKU, following brand DNA</li>
-                <li>Outputs prompt browsers for review and batch generation</li>
-              </ol>
-              <div class="tab-insight"><strong>Key insight:</strong> The prompt is the product. Encoding brand rules deeply enough means every SKU gets production-grade prompts without starting from scratch.</div>
-              <div class="tab-pills">
-                <span>Claude Code</span><span>Python</span><span>Brand Guides</span>
-              </div>
-            </div>
-          </div>
-          <div class="tab-right">
-            <div class="diagram-title">System Flow</div>
-            <div class="diagram">
-              <div class="diagram-row"><div class="box input">Raw Photos</div><div class="arrow"></div><div class="box ai">Organize</div></div>
-              <div class="arrow-down"></div>
-              <div class="diagram-row"><div class="box input">Brand Guide</div><div class="arrow"></div><div class="box ai">Prompts</div></div>
-              <div class="arrow-down"></div>
-              <div class="diagram-branch"><div class="box output">Prompt Browser</div><div class="arrow"></div><div class="box output">AI Images</div></div>
-            </div>
-            <div class="result-stat">
-              <div class="stat-num">100+</div>
-              <div class="stat-label">SKUs across 4+ brands</div>
-            </div>
-          </div>
-        </div>
-      </div>
-
-      <!-- Tab 5: Email Triage (ops) -->
-      <div class="tab-panel" data-category="ops">
-        <div class="tab-inner">
-          <div class="tab-left">
-            <div class="tab-problem">A founder spent 45 minutes every morning sorting 50+ email replies. High-value leads kept getting buried under auto-replies and "not interested" messages.</div>
-            <div class="tab-solution">
-              <h4>What I built</h4>
-              <ol>
-                <li>Automation pulls the full thread and looks up the sender</li>
-                <li>Claude Code classifies: routine, needs judgment, or high-value</li>
-                <li>Routine sends auto. Judgment calls hit Slack. Hot leads go direct.</li>
-                <li>Every interaction updates CRM + queues SMS follow-up</li>
-              </ol>
-              <div class="tab-insight"><strong>Key insight:</strong> Most people automate all email or none. The value is in the split.</div>
-              <div class="tab-pills">
-                <span>Claude Code</span><span>Claude API</span><span>Make.com</span><span>GoHighLevel</span><span>Slack</span>
-              </div>
-            </div>
-          </div>
-          <div class="tab-right">
-            <div class="diagram-title">System Flow</div>
-            <div class="diagram">
-              <div class="diagram-row"><div class="box input">Inbound Email</div><div class="arrow"></div><div class="box ai">Classify</div></div>
-              <div class="arrow-down"></div>
-              <div class="diagram-branch"><div class="box output">Auto-Send</div><div class="box human">Approval</div><div class="box human">Escalate</div></div>
-              <div class="arrow-down"></div>
-              <div class="diagram-row"><div class="box output">CRM + SMS</div></div>
-            </div>
-            <div class="result-stat">
-              <div class="stat-num">82%</div>
-              <div class="stat-label">less time on email</div>
-            </div>
-          </div>
-        </div>
-      </div>
-
-      <!-- Tab 6: Order Monitor (ops) -->
-      <div class="tab-panel" data-category="ops">
-        <div class="tab-inner">
-          <div class="tab-left">
-            <div class="tab-problem">An e-commerce team processing hundreds of orders daily had no early warning system. Problems surfaced when customers complained.</div>
-            <div class="tab-solution">
-              <h4>What I built</h4>
-              <ol>
-                <li>Order data pulls in daily from the platform</li>
-                <li>Claude Code analyzes against rolling baselines</li>
-                <li>Sorted by severity: Normal = digest. Warning = Slack. Critical = ops lead.</li>
-                <li>Dashboard with trends and recommended actions</li>
-              </ol>
-              <div class="tab-insight"><strong>Key insight:</strong> Catching problems isn't hard. The value is context. Is a refund spike seasonal or something to act on?</div>
-              <div class="tab-pills">
-                <span>Claude Code</span><span>Python</span><span>Slack</span>
-              </div>
-            </div>
-          </div>
-          <div class="tab-right">
-            <div class="diagram-title">System Flow</div>
-            <div class="diagram">
-              <div class="diagram-row"><div class="box input">Orders</div><div class="arrow"></div><div class="box ai">Patterns</div></div>
-              <div class="arrow-down"></div>
-              <div class="diagram-branch"><div class="box output">Normal</div><div class="box human">Warning</div><div class="box alert">Alert</div></div>
-              <div class="arrow-down"></div>
-              <div class="diagram-row"><div class="box output">Dashboard</div></div>
-            </div>
-            <div class="result-stat">
-              <div class="stat-num">0</div>
-              <div class="stat-label">customer complaints before catch</div>
-            </div>
-          </div>
-        </div>
-      </div>
-
-      <!-- Tab 7: Outreach (ops) -->
-      <div class="tab-panel" data-category="ops">
-        <div class="tab-inner">
-          <div class="tab-left">
-            <div class="tab-problem">Cold outreach has a template problem. People can tell in two seconds you didn't write it for them. Manual personalization caps at 5-10 messages/day.</div>
-            <div class="tab-solution">
-              <h4>What I built</h4>
-              <ol>
-                <li>Upload a CSV with whatever data you have per lead</li>
-                <li>System infers what someone in that role cares about</li>
-                <li>Claude Code writes a unique message per lead, not a template swap</li>
-                <li>Person spot-checks quality, then sends</li>
-              </ol>
-              <div class="tab-insight"><strong>Key insight:</strong> "Personalized" and "actually personal" are different things. Contextual reasoning makes outreach land.</div>
-              <div class="tab-pills">
-                <span>Claude Code</span><span>Python</span><span>CSV</span>
-              </div>
-            </div>
-          </div>
-          <div class="tab-right">
-            <div class="diagram-title">System Flow</div>
-            <div class="diagram">
-              <div class="diagram-row"><div class="box input">CSV of Leads</div><div class="arrow"></div><div class="box ai">Personalize</div></div>
-              <div class="arrow-down"></div>
-              <div class="diagram-branch"><div class="box human">Spot-Check</div><div class="arrow"></div><div class="box output">Unique Msgs</div></div>
-            </div>
-            <div class="result-stat">
-              <div class="stat-num">50+</div>
-              <div class="stat-label">personalized messages/day</div>
-            </div>
-          </div>
-        </div>
-      </div>
-
     </div>
   </div>
 </section>
 
-<!-- ============================================ -->
-<!-- SHOWCASE: Hyper-Realistic AI Fashion Pipeline -->
-<!-- ============================================ -->
-<section class="showcase" id="showcase">
-  <div class="container">
-    <div class="showcase-header reveal">
-      <h2>Hyper-Realistic AI Production</h2>
-      <p>100% synthetic. Zero studio. Zero models.</p>
+<!-- ============ IMAGES ============ -->
+<section id="catalog">
+  <div class="wrap">
+    <div class="sec-head rv">
+      <div class="kicker">Images</div>
+      <h2>Your real product, in a better photo.</h2>
+      <p class="lede">Send me whatever photos you have, even a messy supplier listing. You get clean, professional images where the product looks exactly like the one your customer receives.</p>
     </div>
-    <p class="showcase-hint reveal">Click any image to enlarge</p>
-    <div class="showcase-grid">
-      <div class="showcase-item reveal d1">
-        <img src="showcase-1.png" alt="Cover collage - sunglasses model, multiple angles">
-        <div class="showcase-caption">
-          <strong>Multi-Angle Product Showcase</strong>
-          Single AI character, multiple angles and compositions. Every shot consistent.
+
+    <div class="feature rv">
+      <div class="compare" id="compare">
+        <img src="work/dd/DDL-ZOO-04_ref.webp" alt="Supplier listing of a pink plush pig dog toy with dimension lines and Chinese text">
+        <img class="after" src="work/dd/DDL-ZOO-04_dog.webp" alt="A white dog holding the same plush pig toy in a warm studio">
+        <div class="bar"></div>
+        <div class="knob"><svg viewBox="0 0 24 24" fill="none" stroke="#171614" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 6l-6 6 6 6M15 6l6 6-6 6"/></svg></div>
+        <span class="tag l">What I was sent</span><span class="tag r">What I delivered</span>
+        <input type="range" min="0" max="100" value="50" aria-label="Drag to compare supplier listing and delivered image">
+      </div>
+      <div class="feature-copy">
+        <h3>Drag the slider to see the difference.</h3>
+        <p>Left: the supplier's photo of a dog toy, with measurements and Chinese text. Right: the same toy, held by a dog, in a clean studio. Same colours, same texture, same shape. A dog holding a toy is one of the hardest shots to get right, because AI tends to change whatever is in its mouth.</p>
+        <ul>
+          <li>Text and clutter removed</li>
+          <li>The product stays exactly the same</li>
+          <li>Five finished images from one photo</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="pairs rv" id="pairs"></div>
+
+    <div class="subhead rv">
+      <h3>Consistent across a whole collection</h3>
+      <p>22 toys, 5 images each, 110 images. Look along any row: every image matches the others in style.</p>
+    </div>
+    <div class="matrix rv">
+      <div class="matrix-rows" aria-hidden="true"><span>Main image</span><span>With a dog</span><span>Upright</span><span>Lying</span><span>Close-up</span></div>
+      <div class="batch" id="dd-grid">
+        <img src="work/dd-110.webp" alt="Grid of 110 delivered dog toy images: 22 toys across, five shot types down" width="2816" height="800" loading="lazy">
+      </div>
+    </div>
+    <div class="batch-key rv"><span>Sports toys</span><b>Green court</b><span>Animal toys</span><b>Warm studio</b><span class="hand batch-hint">hover any image to look closer</span></div>
+
+    <div class="subhead rv">
+      <h3>Works for any product</h3>
+      <div class="tabs" id="tabs" role="tablist">
+        <button class="on" data-tab="menswear" role="tab">Menswear</button>
+        <button data-tab="apparel" role="tab">Womenswear</button>
+        <button data-tab="jewelry" role="tab">Jewelry</button>
+      </div>
+    </div>
+
+    <div class="tabpanel on rv" id="menswear">
+      <div class="panel-top">
+        <p>One menswear job: 21 products in 70 colours, 280 images, every one checked against the original photo. Hover the grid to look closer.</p>
+      </div>
+      <div class="pairs" id="mw-pairs"></div>
+      <div class="batch" id="batch-grid" style="margin-top:20px">
+        <img src="work/batch-280.webp" alt="Grid of all 280 delivered images from one menswear batch: front, back, profile and close-up for 70 colorways" width="1920" height="1792" loading="lazy">
+      </div>
+      <div class="batch-key"><span>Each row of four</span><b>Front</b><b>Back</b><b>Profile</b><b>Close-up</b><span>× 70 colours</span></div>
+    </div>
+
+    <div class="tabpanel" id="apparel">
+      <div class="panel-top">
+        <p>One jacket, eight images: on an invisible mannequin, a fabric close-up, a lifestyle shot and four studio angles. Look at the jewels: same place in every image, in both colours.</p>
+        <div class="seg" id="seg">
+          <button class="on" data-set="blk"><i style="background:#1d1d1d"></i>Black</button>
+          <button data-set="wht"><i style="background:#f3efe6"></i>Ivory</button>
         </div>
       </div>
-      <div class="showcase-item reveal d2">
-        <img src="showcase-2.png" alt="Character and Style DNA - sunglasses">
-        <div class="showcase-caption">
-          <strong>Character & Style DNA</strong>
-          Consistent character identity across shots, angles, and lighting setups.
-        </div>
+      <div class="shots" id="shots"></div>
+    </div>
+
+    <div class="tabpanel" id="jewelry">
+      <div class="panel-top">
+        <p>Small details are where AI usually slips: an extra stone, a different shape, a colour that shifts. Every piece here stays exactly as designed, in every angle.</p>
       </div>
-      <div class="showcase-item reveal d1">
-        <img src="showcase-3.png" alt="Character and Style DNA - street style jewelry">
-        <div class="showcase-caption">
-          <strong>Style Transfer</strong>
-          Same character consistency applied to different product categories and aesthetics.
+      <div class="jw-wrap">
+        <div class="jw">
+          <img class="thumb model" loading="lazy" src="work/jw1-model.webp" alt="Floral drop earrings on model">
+          <img class="thumb sq" loading="lazy" src="work/jw1-a.webp" alt="Floral drop earrings, front">
+          <img class="thumb sq" loading="lazy" src="work/jw1-b.webp" alt="Floral drop earrings, angled">
+          <img class="thumb sq" loading="lazy" src="work/jw1-c.webp" alt="Floral drop earrings, detail">
+          <img class="thumb sq" loading="lazy" src="work/jw1-d.webp" alt="Floral drop earrings, overhead">
         </div>
-      </div>
-      <div class="showcase-item reveal d2">
-        <img src="showcase-4.png" alt="Face swap - reference to consistent character across formal shots">
-        <div class="showcase-caption">
-          <strong>Face Swap Pipeline</strong>
-          Reference image in, consistent character across every formal and lifestyle shot.
+        <div class="jw">
+          <img class="thumb model" loading="lazy" src="work/jw2-model.webp" alt="Amethyst drop earrings on model">
+          <img class="thumb sq" loading="lazy" src="work/jw2-a.webp" alt="Amethyst drop earrings, front">
+          <img class="thumb sq" loading="lazy" src="work/jw2-b.webp" alt="Amethyst drop earrings, close">
+          <img class="thumb sq" loading="lazy" src="work/jw2-c.webp" alt="Amethyst drop earrings, single">
+          <img class="thumb sq" loading="lazy" src="work/jw2-d.webp" alt="Amethyst drop earrings, angled">
         </div>
       </div>
     </div>
   </div>
 </section>
 
-<!-- ============================================ -->
-<!-- PROCESS (compact horizontal bar) -->
-<!-- ============================================ -->
-<section class="process-bar" id="process">
-  <div class="container reveal">
-    <div class="process-bar-label">How I Work</div>
-    <div class="process-steps">
-      <div class="p-step">
-        <div class="p-step-num">01</div>
-        <h4>Understand</h4>
-        <p>Map current process. Find where data lives, time is spent, things break.</p>
+<!-- ============ VIDEO ============ -->
+<div class="band" id="reels">
+  <div class="wrap">
+    <div class="reel-head">
+      <div class="sec-head rv">
+        <div class="kicker">Video</div>
+        <h2>Short videos for social media and ads.</h2>
+        <p class="lede">Fashion reels made to feel like real customer videos. Click one to play it with sound.</p>
       </div>
-      <div class="p-step">
-        <div class="p-step-num">02</div>
-        <h4>Design</h4>
-        <p>System diagram before build. What triggers what, where AI handles it, failure paths.</p>
+      <div class="arrows">
+        <button id="r-prev" aria-label="Previous reel"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 18l-6-6 6-6"/></svg></button>
+        <button id="r-next" aria-label="Next reel"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 18l6-6-6-6"/></svg></button>
       </div>
-      <div class="p-step">
-        <div class="p-step-num">03</div>
-        <h4>Build & Test</h4>
-        <p>Built in pieces, tested against edge cases, verified with real data.</p>
+    </div>
+  </div>
+  <div class="stage" id="stage"></div>
+  <div class="reel-caption" aria-live="polite"><b id="r-title"></b><span id="r-sub"></span></div>
+  <div class="pips" id="pips"></div>
+</div>
+
+<!-- ============ SYSTEMS ============ -->
+<section id="qa">
+  <div class="wrap">
+    <div class="sec-head rv">
+      <div class="kicker">Quality checks</div>
+      <h2>Every image is checked before you see it.</h2>
+      <p class="lede">Checking hundreds of images by eye isn't reliable, so I built a tool for it. It puts the original photo next to each new image, and each one is approved or redone. Try it: hover over it, then press A to approve or F to flag.</p>
+    </div>
+
+    <div class="qa rv" id="qa-app" tabindex="0" aria-label="Review tool demo">
+      <div class="qa-top">
+        <div class="qa-title"><div class="dots"><i></i><i></i><i></i></div><b>Batch review · Menswear</b></div>
+        <div class="qa-progress">
+          <div class="row"><span id="qa-count">0 / 32 approved</span><span class="flagged" id="qa-flagged">0 flagged</span></div>
+          <div class="track"><div class="fill" id="qa-fill"></div><div class="fill fl" id="qa-ffill"></div></div>
+        </div>
       </div>
-      <div class="p-step">
-        <div class="p-step-num">04</div>
-        <h4>Hand Off</h4>
-        <p>System, docs, video walkthrough. Everything is yours. Full ownership.</p>
+      <div class="qa-body">
+        <div class="qa-list" id="qa-list"></div>
+        <div class="qa-main">
+          <div class="qa-view ref"><img class="thumb" id="qa-ref" alt=""><span class="lab">Original</span></div>
+          <div class="qa-view shot" id="qa-shotbox"><img class="thumb" id="qa-shot" alt=""><span class="lab" id="qa-shotlab">Front</span><span class="stamp" id="qa-stamp"></span></div>
+          <div class="qa-side">
+            <span class="risk" id="qa-risk"></span>
+            <h4 id="qa-name"></h4>
+            <div class="meta" id="qa-meta"></div>
+            <div class="why" id="qa-why"></div>
+            <div class="spacer"></div>
+            <button class="qa-btn ok" id="qa-ok">Approve <kbd>A</kbd></button>
+            <button class="qa-btn fl" id="qa-fl">Flag for redo <kbd>F</kbd></button>
+            <p class="hint">Arrow keys move between shots.</p>
+          </div>
+          <p class="qa-reflabel">The original stays on the left. Compare, decide, move on.</p>
+          <div class="qa-strip" id="qa-strip"></div>
+        </div>
+      </div>
+    </div>
+    <p class="qa-foot rv">A sample of 8 products from a real 280-image job. The full tool also saves progress and sends flagged images straight back to be redone.</p>
+
+    <div class="subhead rv" id="tools">
+      <h3>Other tools I built</h3>
+      <p>Built to save time and catch mistakes, and used on real jobs.</p>
+    </div>
+    <div class="tools rv">
+      <div class="tool">
+        <div class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="7" height="9" rx="1.5"/><rect x="14" y="3" width="7" height="5" rx="1.5"/><rect x="14" y="12" width="7" height="9" rx="1.5"/><rect x="3" y="16" width="7" height="5" rx="1.5"/></svg></div>
+        <h3>Review and delivery</h3>
+        <p>Powers the checker above, then exports the approved images, named and sorted the way your store needs them.</p>
+        <div class="tag">Python</div>
+      </div>
+      <div class="tool">
+        <div class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 6h16M4 12h10M4 18h7"/><path d="M17 15l3 3-3 3"/></svg></div>
+        <h3>Project setup</h3>
+        <p>Sorts a new batch of photos, flags problems before any image is made, and prepares the instructions for each product.</p>
+        <div class="tag">Claude Code</div>
+      </div>
+      <div class="tool">
+        <div class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="M10 9l5 3-5 3z"/></svg></div>
+        <h3>Video breakdown</h3>
+        <p>Paste a TikTok, Reel or YouTube link and get a breakdown of its shots, pacing and hook, so we can learn from what already works.</p>
+        <div class="tag">Python + Gemini</div>
       </div>
     </div>
   </div>
 </section>
 
-<!-- ============================================ -->
-<!-- ABOUT + ROBOT -->
-<!-- ============================================ -->
-<section class="about">
-  <div class="about-inner">
-    <div>
-      <h2 class="about-heading reveal">Clear Thinking,<br>Clean Systems</h2>
-      <div class="about-text">
-        <p class="reveal d1">I build AI systems for content creation and business operations. Social media engines that produce platform-ready content at scale. Product pipelines that turn raw photos into listing-ready images. Automated workflows that replace hours of manual work.</p>
-        <p class="reveal d2">My process: understand how your team works, figure out what AI can handle, build it, hand it over with docs. Everything I build is yours.</p>
-      </div>
+<!-- ============ PROCESS ============ -->
+<section id="process">
+  <div class="wrap">
+    <div class="sec-head rv">
+      <div class="kicker">How I work</div>
+      <h2>Six steps, every project.</h2>
+      <p class="lede">Making the image is the quick part. These steps are what make the results reliable.</p>
     </div>
-    <div class="about-image reveal d2">
-      <img src="avatar-robot.png" alt="3D avatar with robot companion">
+    <div class="steps rv">
+      <div class="step"><h3>Collect</h3><p>Your product photos, brand guide and examples of what you like.</p></div>
+      <div class="step"><h3>Check the photos</h3><p>Spot problems before anything is made: missing angles, unclear details, wrong colours. Cheaper to fix now than later.</p></div>
+      <div class="step"><h3>Lock the first image</h3><p>The first image is checked and locked. Every other angle is built to match it.</p></div>
+      <div class="step"><h3>Create</h3><p>Made with leading AI image and video tools, following your brand's style.</p></div>
+      <div class="step hl"><h3>Review</h3><p>Every result is compared with the original. Anything that's off gets redone.</p></div>
+      <div class="step"><h3>Deliver</h3><p>Files named, sorted and ready to upload.</p></div>
     </div>
   </div>
 </section>
 
-<!-- ============================================ -->
-<!-- CONTACT + GIANT CTA (merged) -->
-<!-- ============================================ -->
-<div class="contact-cta" id="contact">
-  <div class="contact-top reveal">
-    <div>
-      <div class="col-label">Profiles</div>
-      <a href="https://www.linkedin.com/in/ethan-palamos" target="_blank">LinkedIn</a><br>
-      <a href="https://www.upwork.com/freelancers/~01965e0bca1d60b7da?mp_source=share" target="_blank">Upwork</a><br>
-      <a href="https://www.onlinejobs.ph/jobseekers/info/1704419" target="_blank">OnlineJobs.ph</a>
+<!-- ============ ABOUT ============ -->
+<section id="about">
+  <div class="wrap about">
+    <div class="about-art rv">
+      <img src="work/brand-robot.webp" alt="3D avatar of Ethan laughing, holding a small red robot" width="784" height="859" loading="lazy">
+      <div class="note hand">me and the machine</div>
     </div>
-    <div>
-      <div class="col-label">Email</div>
-      <a href="mailto:palamosejr@gmail.com">palamosejr@gmail.com</a>
-    </div>
-    <div>
-      <div class="col-label">Availability</div>
-      Currently available<br>
-      Full-time / Retainer / Project
-    </div>
-    <div>
-      <div class="col-label">Location</div>
-      Manila, Philippines<br>
-      UTC+8
+    <div class="about-copy rv">
+      <div class="kicker">About</div>
+      <h2>Hi, I'm Ethan.</h2>
+      <p>I'm based in Manila. I studied economics, so I care about evidence: an image is right when it matches the real product, not just when it looks nice. I've worked with AI image and video tools for a year and a half, most recently for an online retailer running six brands across womenswear, menswear, jewelry and pet products.</p>
+      <p>I make the images, make the video and build the tools that check them. In all three, the goal is the same: results you can rely on.</p>
+      <div class="stack">
+        <span>Higgsfield</span><span>Kie.ai</span><span>Nano Banana</span><span>Claude Code</span><span>Python</span><span>Gemini API</span><span>Product photography</span><span>Short-form video</span>
+      </div>
     </div>
   </div>
+</section>
 
-  <div class="giant-cta reveal">
-    <div class="giant-cta-inner">
-      <div class="giant-cta-text">
-        <a href="mailto:palamosejr@gmail.com">REACH OUT</a>
+<!-- ============ CONTACT ============ -->
+<div class="contact" id="contact">
+  <div class="wrap">
+    <div class="contact-card rv">
+      <div>
+        <h2>Need AI results you can <em>rely on?</em></h2>
+        <p>Tell me what you're making. I'll show you how I'd get it right. Open to full-time, retainer or project work.</p>
+        <div class="btns">
+          <a class="btn primary" href="mailto:palamosejr@gmail.com">palamosejr@gmail.com</a>
+          <a class="btn ghost" href="https://www.linkedin.com/in/ethan-palamos" target="_blank" rel="noopener">LinkedIn</a>
+        </div>
       </div>
+      <dl>
+        <div><dt>Status</dt><dd class="status">Available now</dd></div>
+        <div><dt>Profiles</dt><dd><a href="https://www.upwork.com/freelancers/~01965e0bca1d60b7da?mp_source=share" target="_blank" rel="noopener">Upwork</a> &nbsp;·&nbsp; <a href="https://www.onlinejobs.ph/jobseekers/info/1704419" target="_blank" rel="noopener">OnlineJobs.ph</a></dd></div>
+        <div><dt>Location</dt><dd>Manila, Philippines · UTC+8</dd></div>
+      </dl>
+      <img class="face" src="work/brand-face.webp" alt="" loading="lazy">
     </div>
   </div>
 </div>
 
-<!-- Lightbox -->
-<div class="lightbox" id="lightbox" onclick="closeLightbox()">
-  <button class="lightbox-close" onclick="closeLightbox()">&times;</button>
-  <img id="lightboxImg" src="" alt="">
-</div>
+</main>
+
+<footer><div class="wrap"><span>© 2026 Ethan Palamos</span><span>Client brand names withheld. Product images shown are AI-generated deliverables.</span></div></footer>
+
+<div class="lb" id="lb"><img alt=""></div>
 
 <script>
-  // Reveal on scroll
-  const observer = new IntersectionObserver((entries) => {
-    entries.forEach(entry => {
-      if (entry.isIntersecting) entry.target.classList.add('visible');
-    });
-  }, { threshold: 0.1 });
-  document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+// ============ data ============
+const PRODUCTS = [
+  { id: 'P10', color: 'GreyPlaid',  name: 'Plaid Wide-Leg Pants',      cw: 'Grey Plaid',  risk: 'risky', ref: 'Listing screenshot with text' },
+  { id: 'P09', color: 'NavyGold',   name: 'Stripe Panel Pants',        cw: 'Navy / Gold', risk: 'risky', ref: 'Phone photo on a chair' },
+  { id: 'P06', color: 'YellowGold', name: 'Bomber Jacket',             cw: 'Yellow Gold', risk: 'easy',  ref: 'Product only, no model' },
+  { id: 'P04', color: 'SageGreen',  name: 'Track Jacket',              cw: 'Sage Green',  risk: 'easy',  ref: 'On-model, head cropped' },
+  { id: 'P16', color: 'Navy',       name: 'Waffle-Knit Crewneck',      cw: 'Navy',        risk: 'easy',  ref: 'On-model, torso crop' },
+  { id: 'P12', color: 'GreySolid',  name: '2-in-1 Athletic Shorts',    cw: 'Grey',        risk: 'risky', ref: 'Product render, liner visible' },
+  { id: 'P18', color: 'Red',        name: 'Board Shorts',              cw: 'Red',         risk: 'easy',  ref: 'On-model, waist crop' },
+  { id: 'P01', color: 'DarkWash',   name: 'Wide-Leg Jeans',            cw: 'Dark Wash',   risk: 'risky', ref: 'Flat-lay, washed denim' },
+];
+const SHOTS = ['1_front', '2_back', '3_profile', '4_closeup'];
+const SHOT_LBL = { '1_front': 'Front', '2_back': 'Back', '3_profile': 'Profile', '4_closeup': 'Close-up' };
+const img = (p, s) => `work/ash/${p.id}_${p.color}_${s}.webp`;
 
-  // Background avatar scroll opacity
-  const bgAvatar = document.getElementById('bgAvatar');
-  const heroSection = document.getElementById('hero');
-  window.addEventListener('scroll', () => {
-    const scrollY = window.scrollY;
-    const heroBottom = heroSection.offsetHeight;
-    const docHeight = document.documentElement.scrollHeight - window.innerHeight;
+const REELS = [
+  { f: 'reel-1', t: 'At-home basics',     s: 'Lifestyle · interior, daylight' },
+  { f: 'reel-2', t: 'Black & white pair', s: 'Street · doorway, two models' },
+  { f: 'reel-3', t: 'Night walk',         s: 'Street · cobblestones, handheld' },
+  { f: 'reel-4', t: 'Boutique try-on',    s: 'In-store · natural light' },
+  { f: 'reel-5', t: 'Rooftop night',      s: 'Event · skyline backdrop' },
+  { f: 'reel-6', t: 'Satin after dark',   s: 'Street · night, walking away' },
+];
 
-    if (scrollY <= heroBottom) {
-      bgAvatar.style.opacity = 0;
-    } else {
-      const progress = Math.min((scrollY - heroBottom) / (docHeight - heroBottom), 1);
-      const opacity = 0.05 + progress * 0.30;
-      bgAvatar.style.opacity = opacity;
-    }
+// ============ nav border on scroll ============
+const nav = document.getElementById('nav');
+addEventListener('scroll', () => nav.classList.toggle('scrolled', scrollY > 8), { passive: true });
+
+// ============ grid loupe (shared) ============
+const CWS = [["Wide-Leg Jeans","Cream Khaki"],["Wide-Leg Jeans","Dark Wash"],["Wide-Leg Jeans","Grey"],["Wide-Leg Jeans","Light Blue"],["Wide-Leg Jeans","Sage Green"],["Wide-Leg Jeans","Vintage Green"],["Washed Wide-Leg Jeans","Black Wash"],["Washed Wide-Leg Jeans","Light Blue Wash"],["Washed Wide-Leg Jeans","Mid Blue"],["Washed Wide-Leg Jeans","Olive Brown Wash"],["Washed Wide-Leg Jeans","Black Wash"],["Washed Wide-Leg Jeans","Light Blue"],["Washed Wide-Leg Jeans","Mid Blue"],["Track Jacket","Black"],["Track Jacket","Blue Grey"],["Track Jacket","Cream"],["Track Jacket","Sage Green"],["Cable-Knit Sweater","Grey"],["Cable-Knit Sweater","Light Blue"],["Bomber Jacket","Black"],["Bomber Jacket","Navy"],["Bomber Jacket","Sage Green"],["Bomber Jacket","White"],["Bomber Jacket","Yellow Gold"],["Needles-Style Track Pants","Dark Green"],["Needles-Style Track Pants","Light Blue"],["Needles-Style Track Pants","Mauve Taupe"],["Needles-Style Track Pants","Olive"],["Needles-Style Track Pants","Teal Pink"],["Needles-Style Track Pants","White Purple"],["Drawstring Denim Pants","Black"],["Drawstring Denim Pants","Blue"],["Drawstring Denim Pants","Grey"],["Stripe Panel Wide-Leg Pants","Black White"],["Stripe Panel Wide-Leg Pants","Grey Black"],["Stripe Panel Wide-Leg Pants","Navy Gold"],["Stripe Panel Wide-Leg Pants","White Red"],["Plaid Wide-Leg Pants","Grey Plaid"],["Textured Drawstring Pants","Black"],["Textured Drawstring Pants","Grey"],["Textured Drawstring Pants","Khaki Tan"],["Textured Drawstring Pants","Light Blue"],["2-in-1 Athletic Shorts","Black Floral"],["2-in-1 Athletic Shorts","Black Reflective"],["2-in-1 Athletic Shorts","Dark Floral"],["2-in-1 Athletic Shorts","Grey Solid"],["2-in-1 Athletic Shorts","Teal Mint Floral"],["Pleated Drawstring Shorts","Black"],["Pleated Drawstring Shorts","Mint Green"],["Pleated Drawstring Shorts","White Cream"],["V-Notch Knit Sweater","Brown"],["V-Notch Knit Sweater","Navy"],["Checkerboard Knit Sweater","Green"],["Waffle-Knit Crewneck Sweater","Black"],["Waffle-Knit Crewneck Sweater","Cream"],["Waffle-Knit Crewneck Sweater","Grey Blue"],["Waffle-Knit Crewneck Sweater","Navy"],["Waffle-Knit Crewneck Sweater","Olive Khaki"],["Zip Polo Shirt","Cream"],["Zip Polo Shirt","Green"],["Board Shorts / Swim Trunks","Lime Green"],["Board Shorts / Swim Trunks","Pink"],["Board Shorts / Swim Trunks","Red"],["Board Shorts / Swim Trunks","Steel Blue"],["Board Shorts / Swim Trunks","Teal"],["Athletic LS Tee","Black White"],["Athletic LS Tee","Cream Navy"],["Athletic LS Tee","Lime Teal"],["Athletic LS Tee","Olive Orange"],["Athletic LS Tee","Olive White"]];
+const DD = ["Soccer Yellow", "Soccer Blue", "Sunball Purple", "Football Stripe Red", "Football Smiley Pink", "Volleyball", "Football Smiley Blue", "Football Stripe Orange", "Emojiball Green", "Basketball Orange", "Flatfish Pink", "Lion", "Ropetoy Dog", "Pig Costume Pink", "Frog Green", "Fish Striped Purple", "Pig Tube Pink", "Rabbit Pink", "Cow", "Elephant Grey", "Fox Rope", "Elephant Blue"];
+const MW_SHOTS = ['Front', 'Back', 'Profile', 'Close-up'];
+const DD_SHOTS = ['Main image', 'With a dog', 'Upright', 'Lying', 'Close-up'];
+
+function loupe(gridId, sprite, cols, rows, lw, lh, label) {
+  const g = document.getElementById(gridId);
+  const lens = document.createElement('div'); lens.className = 'lens'; lens.setAttribute('aria-hidden', 'true');
+  lens.innerHTML = '<div class="lens-img"></div><span></span>';
+  const hl = document.createElement('div'); hl.className = 'hl';
+  g.append(hl, lens);
+  const li = lens.querySelector('.lens-img'), lt = lens.querySelector('span');
+  Object.assign(li.style, { width: lw + 'px', height: lh + 'px', backgroundImage: `url(${sprite})`, backgroundSize: `${cols * lw}px ${rows * lh}px` });
+  lens.style.width = (lw + 12) + 'px';
+  let last = -1;
+  g.addEventListener('mousemove', e => {
+    const r = g.getBoundingClientRect(), x = e.clientX - r.left, y = e.clientY - r.top;
+    const col = Math.min(cols - 1, Math.floor(x / r.width * cols)), row = Math.min(rows - 1, Math.floor(y / r.height * rows));
+    const cw = r.width / cols, ch = r.height / rows;
+    g.classList.add('on');
+    Object.assign(hl.style, { left: col * cw + 'px', top: row * ch + 'px', width: cw + 'px', height: ch + 'px' });
+    let lx = x + 24; if (lx + lw + 20 > r.width) lx = x - lw - 36;
+    let ly = y - lh / 2 - 30;
+    // short grids: let the lens float above/below the grid instead of clamping it inside
+    if (r.height > lh + 80) ly = Math.max(8, Math.min(ly, r.height - lh - 80));
+    lens.style.left = lx + 'px'; lens.style.top = ly + 'px';
+    const idx = row * cols + col;
+    if (idx !== last) { last = idx; li.style.backgroundPosition = `-${col * lw}px -${row * lh}px`; lt.innerHTML = label(col, row); }
   });
+  g.addEventListener('mouseleave', () => { g.classList.remove('on'); last = -1; });
+}
+loupe('dd-grid', 'work/dd-110.webp', 22, 5, 176, 220, (c, r) => `<b>${DD[c]}</b>${c < 10 ? 'Sports' : 'Animal'} toys · ${DD_SHOTS[r]}`);
+loupe('batch-grid', 'work/batch-280.webp', 20, 14, 180, 240, (c, r) => { const i = r * 20 + c, [n, col] = CWS[i >> 2]; return `<b>${n}</b>${col} · ${MW_SHOTS[i % 4]}`; });
 
-  // Tab switching
-  function switchTab(index) {
-    document.querySelectorAll('.tab-btn').forEach((btn, i) => {
-      btn.classList.toggle('active', i === index);
-    });
-    document.querySelectorAll('.tab-panel').forEach((panel, i) => {
-      panel.classList.toggle('active', i === index);
-    });
-  }
+// ============ before/after pairs + slider ============
+const DD_PAIRS = [
+  ['DDL-ATH-05', 'hero',    'Pink Football',  'Supplier photo with text → main image'],
+  ['DDL-ZOO-12', 'dog',     'Blue Elephant',  'Supplier photo with measurements → with a dog'],
+  ['DDL-ATH-03', 'dog',     'Sunball',        'Staged product photo → with a dog'],
+  ['DDL-ZOO-09', 'hero',    'Cow',            'Supplier photo with measurements → main image'],
+  ['DDL-ZOO-02', 'upright', 'Lion',           'Supplier photo with text → product shot'],
+  ['DDL-ATH-09', 'dog',     'Emoji Ball',     'Supplier photo with text → with a dog'],
+];
+const pairCard = (ref, out, name, note) => `
+  <article class="pair">
+    <div class="duo">
+      <img class="thumb" loading="lazy" src="${ref}" alt="Supplier photo: ${name}">
+      <img class="thumb" loading="lazy" src="${out}" alt="Delivered: ${name}">
+      <span class="arrow">&rarr;</span>
+    </div>
+    <div class="info"><b>${name}</b><span>${note}</span></div>
+  </article>`;
+document.getElementById('pairs').innerHTML = DD_PAIRS.map(([id, shot, name, note]) =>
+  pairCard(`work/dd/${id}_ref.webp`, `work/dd/${id}_${shot}.webp`, name, note)).join('');
+document.getElementById('mw-pairs').innerHTML = PRODUCTS.slice(0, 3).map(p =>
+  pairCard(img(p, 'ref'), img(p, '1_front'), p.name, p.ref)).join('');
 
-  // Filter builds by category
-  function filterBuilds(category) {
-    // Update filter buttons
-    document.querySelectorAll('.filter-btn').forEach(btn => {
-      btn.classList.toggle('active', btn.textContent.trim().toLowerCase().includes(
-        category === 'all' ? 'all' : category === 'social' ? 'social' : 'business'
-      ));
-    });
+const cmp = document.getElementById('compare');
+cmp.querySelector('input').addEventListener('input', e => cmp.style.setProperty('--pos', e.target.value + '%'));
 
-    const tabBtns = document.querySelectorAll('.tab-btn');
-    const tabPanels = document.querySelectorAll('.tab-panel');
+// ============ 02 QA ============
+const WHY = {
+  P10: 'The original has text and an inset. The plaid size and the pleats must match.',
+  P09: 'The original is a phone photo on a chair. Same number of stripes, same navy.',
+  P06: 'Product-only photo. The collar and cuff stripes must stay in the same order.',
+  P04: 'Head cropped in the original. The sleeve stripe must run shoulder to cuff on both arms.',
+  P16: 'The waffle knit has to show at full-body distance, not go flat.',
+  P12: 'The inner liner must show below the hem in every angle.',
+  P18: 'The drawstring stays black. The red must not turn orange.',
+  P01: 'The leather patch stays in place, and the dark wash stays dark.',
+};
+const qa = {}; PRODUCTS.forEach(p => SHOTS.forEach(s => qa[`${p.id}_${s}`] = ''));
+let qp = 0, qs = 0;
+const $ = id => document.getElementById(id);
 
-    // Show/hide tabs based on category
-    let firstVisible = -1;
-    tabBtns.forEach((btn, i) => {
-      const cat = btn.getAttribute('data-category');
-      const visible = category === 'all' || cat === category;
-      btn.classList.toggle('hidden', !visible);
-      if (visible && firstVisible === -1) firstVisible = i;
-    });
+function renderQA() {
+  const p = PRODUCTS[qp], s = SHOTS[qs], st = qa[`${p.id}_${s}`];
+  $('qa-list').innerHTML = PRODUCTS.map((x, i) => `
+    <button class="qa-item${i === qp ? ' on' : ''}" data-p="${i}">
+      <img src="${img(x, '1_front')}" alt="${x.name}">
+      <div><b>${x.name}</b><small>${x.cw}</small></div>
+      <span class="pips4">${SHOTS.map(y => `<i class="${qa[`${x.id}_${y}`]}"></i>`).join('')}</span>
+    </button>`).join('');
+  $('qa-ref').src = img(p, 'ref'); $('qa-ref').alt = `Supplier reference: ${p.name}`;
+  $('qa-shot').src = img(p, s); $('qa-shot').alt = `${p.name}, ${SHOT_LBL[s]}`;
+  $('qa-shotlab').textContent = SHOT_LBL[s];
+  $('qa-shotbox').className = `qa-view shot ${st}`;
+  $('qa-stamp').textContent = st === 'done' ? 'Approved' : st === 'flag' ? 'Flagged' : '';
+  $('qa-risk').className = `risk ${p.risk}`; $('qa-risk').textContent = p.risk;
+  $('qa-name').textContent = p.name;
+  $('qa-meta').textContent = `${p.id} · ${p.cw}`;
+  $('qa-why').textContent = WHY[p.id];
+  $('qa-ok').classList.toggle('on', st === 'done');
+  $('qa-fl').classList.toggle('on', st === 'flag');
+  $('qa-strip').innerHTML = SHOTS.map((y, i) => `
+    <button class="${i === qs ? 'on' : ''}" data-s="${i}"><img src="${img(p, y)}" alt="${SHOT_LBL[y]}"><span>${SHOT_LBL[y]}</span><i class="${qa[`${p.id}_${y}`]}"></i></button>`).join('');
+  const v = Object.values(qa), d = v.filter(x => x === 'done').length, f = v.filter(x => x === 'flag').length;
+  $('qa-count').textContent = `${d} / ${v.length} approved`;
+  $('qa-flagged').textContent = `${f} flagged`;
+  $('qa-fill').style.width = d / v.length * 100 + '%';
+  $('qa-ffill').style.width = f / v.length * 100 + '%';
+}
+let advance = null;
+function mark(v) {
+  const k = `${PRODUCTS[qp].id}_${SHOTS[qs]}`;
+  qa[k] = qa[k] === v ? '' : v;
+  renderQA();
+  clearTimeout(advance);
+  if (qa[k]) advance = setTimeout(() => step(1), 380);
+}
+function step(d) {
+  qs += d;
+  if (qs > 3) { qs = 0; qp = (qp + 1) % PRODUCTS.length; }
+  if (qs < 0) { qs = 3; qp = (qp - 1 + PRODUCTS.length) % PRODUCTS.length; }
+  renderQA();
+}
+$('qa-list').addEventListener('click', e => { const b = e.target.closest('[data-p]'); if (b) { qp = +b.dataset.p; qs = 0; renderQA(); } });
+$('qa-strip').addEventListener('click', e => { const b = e.target.closest('[data-s]'); if (b) { qs = +b.dataset.s; renderQA(); } });
+$('qa-ok').addEventListener('click', () => mark('done'));
+$('qa-fl').addEventListener('click', () => mark('flag'));
+const qaApp = $('qa-app');
+let qaHover = false;
+qaApp.addEventListener('mouseenter', () => qaHover = true);
+qaApp.addEventListener('mouseleave', () => qaHover = false);
+document.addEventListener('keydown', e => {
+  if (!qaHover && document.activeElement !== qaApp) return;
+  const k = e.key.toLowerCase();
+  if (k === 'a') mark('done');
+  else if (k === 'f') mark('flag');
+  else if (k === 'arrowright') { e.preventDefault(); step(1); }
+  else if (k === 'arrowleft') { e.preventDefault(); step(-1); }
+});
+renderQA();
+PRODUCTS.forEach(p => ['ref', ...SHOTS].forEach(s => { const i = new Image(); i.src = img(p, s); }));
 
-    // Activate first visible tab
-    if (firstVisible !== -1) {
-      switchTab(firstVisible);
-    }
-  }
+// ============ product tabs ============
+document.getElementById('tabs').addEventListener('click', e => {
+  const b = e.target.closest('button');
+  if (!b) return;
+  document.querySelectorAll('#tabs button').forEach(x => x.classList.toggle('on', x === b));
+  document.querySelectorAll('.tabpanel').forEach(t => t.classList.toggle('on', t.id === b.dataset.tab));
+});
 
-  // Lightbox
-  function openLightbox(src) {
-    document.getElementById('lightboxImg').src = src;
-    document.getElementById('lightbox').classList.add('open');
-    document.body.style.overflow = 'hidden';
-  }
-  function closeLightbox() {
-    document.getElementById('lightbox').classList.remove('open');
-    document.body.style.overflow = '';
-  }
-  document.addEventListener('keydown', e => { if (e.key === 'Escape') closeLightbox(); });
-  document.querySelectorAll('.showcase-item').forEach(item => {
-    item.addEventListener('click', () => {
-      const img = item.querySelector('img');
-      if (img) openLightbox(img.src);
-    });
+// ============ 03 apparel ============
+const SET = [
+  ['1-ghost-front', 'Mannequin', 'Front'], ['2-ghost-back', 'Mannequin', 'Back'],
+  ['3-swatch', 'Detail', 'Fabric'], ['4-lifestyle', 'Lifestyle', 'On location'],
+  ['5-studio-front', 'Studio', 'Front'], ['6-studio-back', 'Studio', 'Back'],
+  ['7-studio-medium', 'Studio', 'Medium'], ['8-studio-profile', 'Studio', 'Profile'],
+];
+const shotsEl = document.getElementById('shots');
+shotsEl.innerHTML = SET.map(([f, a, b], i) =>
+  `<figure><img class="thumb" loading="lazy" data-f="${f}" src="work/blk-${f}.webp" alt="${a} ${b}"><figcaption><b>0${i + 1}</b>${a} · ${b}</figcaption></figure>`).join('');
+document.getElementById('seg').addEventListener('click', e => {
+  const b = e.target.closest('button');
+  if (!b || b.classList.contains('on')) return;
+  document.querySelectorAll('#seg button').forEach(x => x.classList.toggle('on', x === b));
+  const figs = shotsEl.querySelectorAll('figure');
+  figs.forEach(f => f.style.opacity = 0);
+  setTimeout(() => {
+    shotsEl.querySelectorAll('img').forEach(im => im.src = `work/${b.dataset.set}-${im.dataset.f}.webp`);
+    figs.forEach(f => f.style.opacity = 1);
+  }, 220);
+});
+// warm the ivory set so the swap is instant
+SET.forEach(([f]) => { const i = new Image(); i.src = `work/wht-${f}.webp`; });
+
+// ============ 05 reels: coverflow ============
+const stage = document.getElementById('stage'), pipsEl = document.getElementById('pips');
+const ICON_MUTED = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M11 5L6 9H2v6h4l5 4z"/><path d="M23 9l-6 6M17 9l6 6"/></svg>';
+const ICON_SOUND = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M11 5L6 9H2v6h4l5 4z"/><path d="M15.5 8.5a5 5 0 010 7M19 5a10 10 0 010 14"/></svg>';
+stage.innerHTML = REELS.map((r, i) => `
+  <article class="reel" data-i="${i}" aria-label="${r.t}">
+    <video src="work/reels/${r.f}.mp4" poster="work/reels/${r.f}.jpg" preload="none" playsinline loop muted></video>
+    <div class="shade"></div><div class="play"></div><div class="mute">${ICON_MUTED}</div>
+  </article>`).join('');
+pipsEl.innerHTML = REELS.map((r, i) => `<button data-i="${i}" aria-label="Show ${r.t}"></button>`).join('');
+
+const cards = [...stage.querySelectorAll('.reel')];
+const N = cards.length;
+let cur = 0, prevOffsets = cards.map(() => 0), inView = false;
+
+function layout() {
+  const w = stage.clientWidth;
+  const cardW = Math.max(200, Math.min(330, w * 0.26));
+  const step = Math.min(cardW * 0.78, w * 0.2);
+  stage.style.setProperty('--card-w', cardW + 'px');
+  stage.style.setProperty('--stage-h', (cardW * 16 / 9) + 'px');
+  cards.forEach((c, i) => {
+    let d = i - cur;
+    if (d > N / 2) d -= N;
+    if (d < -N / 2) d += N;
+    const a = Math.abs(d);
+    // a card that wraps around the back jumps without animating
+    c.classList.toggle('instant', Math.abs(d - prevOffsets[i]) > 2);
+    prevOffsets[i] = d;
+    const s = a === 0 ? 1 : a === 1 ? .8 : a === 2 ? .64 : .52;
+    const x = Math.sign(d) * (a === 0 ? 0 : step * (a === 1 ? 1.35 : a === 2 ? 2.35 : 3.1));
+    c.style.setProperty('--x', x + 'px');
+    c.style.setProperty('--s', s);
+    c.style.setProperty('--o', a >= 3 ? 0 : 1);
+    c.style.setProperty('--shade', a === 0 ? 0 : a === 1 ? .42 : .68);
+    c.style.setProperty('--z', 10 - a);
+    c.classList.toggle('center', a === 0);
   });
+  requestAnimationFrame(() => cards.forEach(c => c.classList.remove('instant')));
+}
 
-  // URL hash filtering
-  (function() {
-    const hash = window.location.hash;
-    if (hash === '#social') filterBuilds('social');
-    else if (hash === '#ops') filterBuilds('ops');
-  })();
+function setMute(c, muted) {
+  const v = c.querySelector('video');
+  v.muted = muted;
+  c.classList.toggle('sound', !muted);
+  c.querySelector('.mute').innerHTML = muted ? ICON_MUTED : ICON_SOUND;
+}
+
+function go(i, { sound = false } = {}) {
+  cur = (i + N) % N;
+  cards.forEach((c, n) => { if (n !== cur) { c.querySelector('video').pause(); setMute(c, true); } });
+  layout();
+  pipsEl.querySelectorAll('button').forEach((b, n) => b.classList.toggle('on', n === cur));
+  document.getElementById('r-title').textContent = REELS[cur].t;
+  document.getElementById('r-sub').textContent = REELS[cur].s;
+  const c = cards[cur], v = c.querySelector('video');
+  setMute(c, !sound);
+  if (inView || sound) v.play().catch(() => setMute(c, true));
+}
+
+cards.forEach((c, i) => c.addEventListener('click', () => {
+  if (i !== cur) return go(i, { sound: true });
+  const v = c.querySelector('video');
+  if (v.muted) { setMute(c, false); v.play().catch(() => {}); }
+  else if (v.paused) v.play().catch(() => {});
+  else { v.pause(); setMute(c, true); }
+}));
+document.getElementById('r-prev').addEventListener('click', () => go(cur - 1));
+document.getElementById('r-next').addEventListener('click', () => go(cur + 1));
+pipsEl.addEventListener('click', e => { const b = e.target.closest('button'); if (b) go(+b.dataset.i); });
+
+// swipe
+let tx = null;
+stage.addEventListener('touchstart', e => tx = e.touches[0].clientX, { passive: true });
+stage.addEventListener('touchend', e => {
+  if (tx === null) return;
+  const dx = e.changedTouches[0].clientX - tx; tx = null;
+  if (Math.abs(dx) > 40) go(cur + (dx < 0 ? 1 : -1));
+});
+// arrow keys while the band is on screen
+document.addEventListener('keydown', e => {
+  if (!inView || qaHover || (e.key !== 'ArrowLeft' && e.key !== 'ArrowRight')) return;
+  go(cur + (e.key === 'ArrowRight' ? 1 : -1));
+});
+// autoplay the centre reel muted only while visible
+new IntersectionObserver(([en]) => {
+  inView = en.isIntersecting;
+  const v = cards[cur].querySelector('video');
+  if (inView) v.play().catch(() => {}); else { v.pause(); setMute(cards[cur], true); }
+}, { threshold: .35 }).observe(stage);
+addEventListener('resize', layout);
+go(0);
+
+// ============ lightbox ============
+const lb = document.getElementById('lb'), lbImg = lb.querySelector('img');
+document.addEventListener('click', e => {
+  const t = e.target.closest('.thumb');
+  if (!t || e.target.closest('button')) return;
+  lbImg.src = t.src; lbImg.alt = t.alt; lb.classList.add('open');
+});
+lb.addEventListener('click', () => lb.classList.remove('open'));
+document.addEventListener('keydown', e => { if (e.key === 'Escape') lb.classList.remove('open'); });
+
+// ============ reveal on scroll ============
+const io = new IntersectionObserver(es => es.forEach(en => { if (en.isIntersecting) { en.target.classList.add('in'); io.unobserve(en.target); } }), { threshold: .12, rootMargin: '0px 0px -40px 0px' });
+document.querySelectorAll('.rv').forEach(el => io.observe(el));
 </script>
-
 </body>
 </html>
